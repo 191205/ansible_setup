@@ -1,0 +1,28 @@
+" vimrc.mappings.plugin
+
+map *   <Plug>(asterisk-g*)
+map g*  <Plug>(asterisk-*)
+map #   <Plug>(asterisk-g#)
+map g#  <Plug>(asterisk-#)
+
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+map z#  <Plug>(asterisk-z#)
+map gz# <Plug>(asterisk-gz#)
+
+xmap v <Plug>(expand_region_expand)
+xmap V <Plug>(expand_region_shrink)
+
+
+xmap I  <Plug>(niceblock-I)
+xmap A  <Plug>(niceblock-A)
+
+
+nmap <silent>j <Plug>(accelerated_jk_gj)
+nmap <silent>k <Plug>(accelerated_jk_gk)
+
+
+map gj <Plug>(edgemotion-j)
+map gk <Plug>(edgemotion-k)
+xmap gj <Plug>(edgemotion-j)
+xmap gk <Plug>(edgemotion-k)
