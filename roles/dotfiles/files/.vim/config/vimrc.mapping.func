@@ -1,0 +1,167 @@
+" -----------------------------
+"  Nvim Functions
+"  Last Review 2019/01/16
+" -----------------------------
+" vim:ft=vim:ts=2:sw=2:fdm=marker
+"_____________________________________________________________________________
+" Autoupdate buffer when modified {{{
+
+" If a buffer is modified,
+" update any 'Last modified:
+" "' in the first 7 lines
+" (with up to 5 characters before it)
+" and restore cursor and window position
+function! s:Subst(start, end, pattern, replacement)
+    let lineno = a:start
+    while lineno <= a:end
+        let curline = getline(lineno)
+        if match(curline, a:pattern) != -1
+            let newline = substitute(curline, a:pattern, a:replacement, '')
+            if newline != curline
+                keepjumps call setline(lineno, newline)
+            endif
+        endif
+        let lineno = lineno + 1
+    endwhile
+endfunction
+
+function! s:LastModified()
+    if &modified == 1
+        let pattern = '^\(.\{,5}Last Modified:\s\).*'
+        let replacement = '\1' . strftime('%d %b %Y')
+        call s:Subst(1, 7, pattern, replacement)
+    endif
+endfunction
+
+augroup LastMod
+    au!
+    au BufWritePre {*.*,vimrc,bash_profile,bashrc,muttrc} call
+                \ s:LastModified()
+augroup END
+
+" }}}
+" Command: Clear Whitespace {{{
+
+function! s:Preserve(command)
+    " Save last search and cursor position
+    let _s=@/
+    let l = line('.')
+    let c = col('.')
+    " Do the business
+    execute a:command
+    " Restore previous search history and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+
+function! s:DeleteTrailingWhitespace()
+    let trailing = search('\s$', 'nw')
+    if trailing != 0
+        call s:Preserve("%s/\\s\\+$//e")
+    endif
+endfunction
+
+augroup Delete_Trailing
+    au!
+    au BufWritePre * :call s:DeleteTrailingWhitespace()
+augroup END
+
+" }}}
+" Visual search {{{
+
+function! s:VSetSearch(cmdtype)
+    let temp = @s
+    norm! gv"sy
+    let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+    let @s = temp
+endfunction
+
+xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR><C-o>
+xnoremap <kMultiply> :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR><C-o>
+xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR><C-o>
+
+" }}}
+" Tmux run in split window {{{
+
+function! s:TmuxSplitCmd(cmd, cwd)
+    if empty('$TMUX')
+        return
+    endif
+    if a:cwd ==# ''
+        let cwd = getcwd()
+    else
+        let cwd = a:cwd
+    endif
+   silent execute '!tmux split-window -p 30 -c '. cwd . ' ' . a:cmd
+endfunction
+
+" }}}
+" Command: Wipe Hidden Buffers {{{
+function! WipeHiddenBuffers()
+	let tpbl=[]
+	call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
+	for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
+		silent execute 'bwipeout' buf
+	endfor
+endfunction
+" }}}
+" Command: Buffer Empty {{{
+function! s:BufferEmpty()
+	let l:current = bufnr('%')
+	if ! getbufvar(l:current, '&modified')
+		enew
+		silent! execute 'bdelete '.l:current
+	endif
+endfunction
+" }}}
+" Command: SweepBuffers {{{
+function! s:SweepBuffers()
+	let bufs = range(1, bufnr('$'))
+	let hidden = filter(bufs, 'buflisted(v:val) && !bufloaded(v:val)')
+	if ! empty(hidden)
+		execute 'silent bdelete' join(hidden)
+	endif
+endfunction
+" }}}
+" Command: Open Changed Files COMMAND {{{
+" Open a split for each dirty file in git
+function! OpenChangedFiles()
+	only " Close all windows, unless they're modified
+	let status =
+		\ system('git status -s | grep "^ \?\(M\|A\|UU\)" | sed "s/^.\{3\}//"')
+	let filenames = split(status, "\n")
+	exec 'edit ' . filenames[0]
+	for filename in filenames[1:]
+		exec 'sp ' . filename
+	endfor
+endfunction
+" }}}
+" Directory and preview \\ mac and linux {{{
+    if has('mac')
+      " Open the macOS dictionary on current word {{{
+      nmap <Leader>? :!open dict://<cword><CR><CR>
+      " }}}
+      " Use Marked for real-time Markdown preview {{{
+      if executable('/Applications/Marked 2.app/Contents/MacOS/Marked 2')
+        autocmd MyAutoCmd FileType markdown
+          \ nmap <buffer><Leader>P :silent !open -a Marked\ 2.app '%:p'<CR>
+      endif
+      " }}}
+      " Use Dash on Mac, for context help {{{
+      if executable('/Applications/Dash.app/Contents/MacOS/Dash')
+        autocmd MyAutoCmd FileType yaml.ansible,php,css,less,html
+          \ nmap <silent><buffer> K :!open -g dash://"<C-R>=split(&ft, '\.')[0]<CR>:<cword>"&<CR><CR>
+        autocmd MyAutoCmd FileType javascript,javascript.jsx,sql,ruby,conf,sh
+          \ nmap <silent><buffer> K :!open -g dash://"<cword>"&<CR><CR>
+      endif
+      " }}}
+      " Use Zeal on Linux for context help {{{
+      elseif executable('zeal')
+        autocmd MyAutoCmd FileType yaml.ansible,php,css,less,html
+          \ nmap <silent><buffer> K :!zeal --query "<C-R>=split(&ft, '\.')[0]<CR>:<cword>"&<CR><CR>
+        autocmd MyAutoCmd FileType javascript,javascript.jsx,sql,ruby,conf,sh
+          \ nmap <silent><buffer> K :!zeal --query "<cword>"&<CR><CR>
+      endif
+        " }}}
+" }}}
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
