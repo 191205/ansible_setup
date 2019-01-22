@@ -1,0 +1,64 @@
+"      .-.     .-.     .-.     .-.     .-.     .-.     .-.
+" `._.'   `._.'   `._.'   `._.'   `._.'   `._.'   `._.'
+"
+"
+" -----------------------------
+" Nvim Directory Management:
+" Created: 2019/01/16
+" Last Changed:
+" -----------------------------
+" vim:ft=vim:ts=2:sw=2:fdm=marker
+"
+"
+"      .-.     .-.     .-.     .-.     .-.     .-.     .-.
+" `._.'   `._.'   `._.'   `._.'   `._.'   `._.'   `._.'
+
+" Changing Working Directory: ---------------------------------------------------
+" Abbreviations:  {{{
+
+" Cd Of Current Currnt Window Only:
+command! Cd :lcd %:p:h
+
+" Show Path:
+command! ShowPath :echo expand('%:p')
+
+" }}}
+" Mapping: {{{
+" Jump Back To Pervious Dir:
+" -----------------
+nnoremap <LocalLeader>cb :cd -<CR>
+nnoremap [S]cb :cd -<CR>
+nnoremap <Leader>cb :cd -<CR>
+
+" Write A New Path:
+" -----------------
+nnoremap [S]cd :cd ~/
+
+" Jump Into Subdir:
+" -----------------
+nnoremap <LocalLeader>cd :cd <C-R>=expand('%:p:h') . '/'<CR>
+
+" Change WD To Current File:
+" -----------------
+nnoremap <silent> <Leader>cd :lcd %:h<CR>
+
+
+" }}}
+" }}}----------------------------------------------------------------------------
+
+" Save File:
+" -----------------
+nnoremap <silent> <LocalLeader>w :w<CR>
+
+" Expand And Save File:
+" -----------------
+nnoremap [S]ew :write <C-R>=expand('%:p:h') . '/'<CR>
+nnoremap [S]ea :edit <C-R>=expand('%:p:h') . '/'<CR>
+nnoremap <Leader>ew :write <C-R>=expand('%:p:h') . '/'<CR>
+nnoremap <LocalLeader>ew :write <C-R>=expand('%:p:h') . '/'<CR>
+nnoremap <LocalLeader>ea :edit <C-R>=expand('%:p:h') . '/'<CR>
+
+" Save And Close Window
+" -----------------
+" nnoremap <silent> <LocalLeader>wc :w!<CR><C-w>c
+
