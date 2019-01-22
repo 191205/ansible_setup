@@ -1,0 +1,38 @@
+if has('nvim')
+  tnoremap <silent> <ESC> <C-\><C-n>
+endif
+
+" toggle last terminal
+nnoremap <Leader>tt :Ttoggle<cr>
+
+" create new terminal
+nnoremap <Leader>tn :Tnew<cr>
+
+" open terminal with number
+nnoremap <Leader>to :Topen
+
+" hide terminal with number
+nnoremap <Leader>th :Tclose
+
+nnoremap <silent> ,t :TREPLSendLine<CR>
+vnoremap <silent> ,t :TREPLSendSelection<CR>
+vnoremap <silent> ,ls "+y <C-W>l a %paste <CR>
+
+" Useful maps
+" open terminal
+nnoremap <silent> ,to :Topen<CR>
+" toggle terminal
+nnoremap <silent> ,tv :Ttoggle<CR>
+" hide/close terminal
+nnoremap <silent> ,th :call neoterm#close()<CR>
+" clear terminal
+nnoremap <silent> ,tl :call neoterm#clear()<CR>
+" kills the current job (send a <c-c>)
+nnoremap <silent> ,tc :call neoterm#kill()<CR>
+
+nnoremap <silent> ,rc :TREPLSendFile<cr>
+nnoremap <silent> ,rl :TREPLSendLine<cr>
+vnoremap <silent> ,rl :TREPLSendSelection<cr>
+nnoremap <silent> vt :vert Tnew<cr>
+nnoremap <silent> st :belowright Tnew<cr>
+nnoremap <silent> vs :terminal<cr>
