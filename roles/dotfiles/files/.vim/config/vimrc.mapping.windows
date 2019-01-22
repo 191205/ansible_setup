@@ -1,0 +1,57 @@
+"      .-.     .-.     .-.     .-.     .-.     .-.     .-.
+" `._.'   `._.'   `._.'   `._.'   `._.'   `._.'   `._.'
+"
+"
+" -----------------------------
+" Nvim Window Management:
+" Created: 2019/01/16
+" Last Changed: 2019/01/17
+" -----------------------------
+" vim:ft=vim:ts=2:sw=2:fdm=marker
+"
+"
+"      .-.     .-.     .-.     .-.     .-.     .-.     .-.
+" `._.'   `._.'   `._.'   `._.'   `._.'   `._.'   `._.'
+
+" Focus WindowSplit:
+" -------------------
+" C-hjkl
+nnoremap <C-h> <C-w>j
+nnoremap <C-j> <C-w>h
+nnoremap <C-l> <C-w>k
+nnoremap <C-k> <C-w>l
+
+" to pervious buffer
+nnoremap <silent> [S]s  :b#<CR>
+
+
+" Close WindowSplit:
+" -------------------
+nnoremap <silent> [S]d <C-w>c
+nnoremap <silent> [S]c :close<CR>
+nnoremap <silent> [S]o :only<CR>
+nnoremap <Leader>cw :close<cr>
+nnoremap <C-c> <C-w>c
+
+
+" Create WindowSplit:
+" -------------------
+nnoremap <silent> [S]f :<C-u>split<CR>
+nnoremap <silent> [S]v :<C-u>vsplit<CR>
+
+" Edit WindowSplit:
+" -------------------
+" Edit Size
+nnoremap <C-A-h> <C-w>2<
+nnoremap <C-A-j> <C-w>2+
+nnoremap <C-A-k> <C-w>2-
+nnoremap <C-A-l> <C-w>2>
+nnoremap <C-A-W> :wincmd =<cr>
+" Change Layout
+nnoremap <silent> <Leader>hv <C-W>H<C-W>x
+nnoremap <silent> <Leader>hs :wincmd J<bar>15 wincmd _<CR>
+" Enlarge split
+nnoremap <C-x> :vert resize<CR>:resize<CR>:normal! ze<CR>
+" Save and close window
+nnoremap <silent> <Leader>wc :w!<CR><C-w>c
+
