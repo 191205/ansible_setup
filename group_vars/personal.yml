@@ -1,14 +1,14 @@
 ---
 corpus_notes: '{{ "~/Notes" | expanduser }}'
 
-imap_nickname: Jubii
-imap_server: imap.jubii.dk
-imap_user: mike@jakobsen.dk
-imap_keychain_account: mike@jakobsen.dk
-imap_keychain_name: Jubii
-
-smtp_server: smtp.jubii.dk
-smtp_from: mike@jakobsen.d😘k
-smtp_user: mike@jakobsen.dk
-smtp_keychain_account: mike@jakobsen.dk
-smtp_keychain_name: Jubii
+# imap_nickname: Jubii
+# imap_server: imap.jubii.dk
+# imap_user: mike@jakobsen.dk
+# imap_keychain_account: mike@jakobsen.dk
+# imap_keychain_name: Jubii
+# 
+# smtp_server: smtp.jubii.dk
+# smtp_from: mike@jakobsen.d
+# smtp_user: mike@jakobsen.dk
+# smtp_keychain_account: mike@jakobsen.dk
+# smtp_keychain_name: Jubii
