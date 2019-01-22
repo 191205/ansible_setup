@@ -1,0 +1,94 @@
+"      .-.     .-.     .-.     .-.     .-.     .-.     .-.
+" `._.'   `._.'   `._.'   `._.'   `._.'   `._.'   `._.'
+"
+"
+" -----------------------------
+" Nvim Dev Mappings:
+" Created: 2019/01/16
+" Last Changed:
+" -----------------------------
+" vim:ft=vim:ts=2:sw=2:fdm=marker
+"
+"
+"      .-.     .-.     .-.     .-.     .-.     .-.     .-.
+" `._.'   `._.'   `._.'   `._.'   `._.'   `._.'   `._.'
+
+" Quick Fix Buffer:
+" -----------------
+"" Move Between items {{{
+" nnoremap <space>c :copen<cr>
+" nnoremap <P><space> :cclose<cr>
+" nnoremap <space>l :lopen<cr>
+nnoremap <silent> <Up> :cprevious<CR>
+nnoremap <silent> <Down> :cnext<CR>
+nnoremap <silent> <Left> :cpfile<CR>
+nnoremap <silent> <Right> :cnfile<CR>
+"" }}}
+
+" Sourcing:
+" ---------
+" File
+nnoremap <Leader>so :update<CR>:so %<CR>
+" Line
+nnoremap <Leader>S ^vg_y:execute @@<CR>:echo 'Sourced line.'<CR>
+" Selection
+vnoremap <Leader>S y:execute @@<CR>:echo 'Sourced selection.'<CR>
+
+" Yank Error:
+" ----------
+nnoremap <silent> <LocalLeader>ym :redir @*\|messages\|:redir END<CR>
+
+" Yank Output Of A Command:
+" -------------------------
+nnoremap <silent> <LocalLeader>yo :call <SID>YankOutput()<CR>
+function! s:YankOutput()
+    redir @*
+    let cmd = input('Enter command whose output will be yanked: ')
+    silent execute cmd
+    redir END
+endfunction
+
+" Google It:
+" ---------
+" Search
+nnoremap <Leader>? :call <SID>goog(expand("<cWORD>"), 0)<cr>
+" And Select First Result
+nnoremap <Leader>! :call <SID>goog(expand("<cWORD>"), 1)<cr>
+
+function! s:goog(pat, lucky)
+  let q = '"'.substitute(a:pat, '["\n]', ' ', 'g').'"'
+  let q = substitute(q, '[[:punct:] ]',
+       \ '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
+  call system(printf('open "https://www.google.com/search?%sq=%s"',
+                   \ a:lucky ? 'btnI&' : '', q))
+endfunction
+
+" Set Paste Mode:
+" --------------
+nnoremap <silent> <F12> :set paste!<cr>
+
+" Diff In Split:
+" ------------------------------
+""" {{{ Function
+function! s:DiffFileSplit()
+    let win_id = win_getid()
+    let other_file = input('Input file for diffing: ', '', 'file')
+    if other_file ==# ''
+        return
+    endif
+    if winwidth(0) <= 2 * (&textwidth ? &textwidth : 80)
+        let diff_cmd = 'diffsplit '
+    else
+        let diff_cmd = 'vert diffsplit '
+    endif
+    execute diff_cmd . other_file
+    call win_gotoid(win_id)
+    normal! gg]c
+endfunction
+""" }}}
+""" {{{ Mappings
+nnoremap <silent> <Leader>Ds :call <SID>DiffFileSplit()<CR>
+nnoremap <silent> <Leader>De :diffoff!<CR>
+nnoremap <silent> <Leader>Du :diffupdate<CR>
+""" }}}
+"" }}}
