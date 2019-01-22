@@ -126,7 +126,7 @@ if dein#load_state(s:path)
 	endif
 endif
 
-call s:source_file('plugins/all.vim')
+" call s:source_file('plugins/all.vim')
 
 filetype plugin indent on
 syntax enable
@@ -137,10 +137,25 @@ if ! has('vim_starting')
 endif
 
 " Loading configuration modules
-call s:source_file('general.vim')
-call s:source_file('filetype.vim')
-call s:source_file('mappings.vim')
-call s:source_file('theme.vim')
+call s:source_file('vimrc.mapping.buffers')
+call s:source_file('vimrc.mapping.cmd')
+call s:source_file('vimrc.mapping.default')
+call s:source_file('vimrc.mapping.dev')
+call s:source_file('vimrc.mapping.dir')
+call s:source_file('vimrc.mapping.ftp')
+call s:source_file('vimrc.mapping.func')
+call s:source_file('vimrc.mapping.init')
+call s:source_file('vimrc.mapping.page')
+call s:source_file('vimrc.mapping.tabs')
+call s:source_file('vimrc.mapping.term')
+call s:source_file('vimrc.mapping.theme')
+call s:source_file('vimrc.mapping.toggles')
+call s:source_file('vimrc.mapping.windows')
+call s:source_file('vimrc.mappings.plugin')
+" call s:source_file('general.vim')
+" call s:source_file('filetype.vim')
+" call s:source_file('mappings.vim')
+" call s:source_file('theme.vim')
 
 " Load user custom local settings
 if filereadable(expand('$VIMPATH/config/local.vim'))
