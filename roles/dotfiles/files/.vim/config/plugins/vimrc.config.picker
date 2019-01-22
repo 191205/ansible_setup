@@ -1,0 +1,59 @@
+" Config: {{{
+let g:picker_find_executable = 'ag'
+let g:picker_find_flags = '--color never --files'
+let g:picker_split = 'topleft'
+let g:picker_height = 5
+" }}}
+" Syntax: {{{
+"call picker#Register({id}, {selection_type}, {vim_command}, {shell_command})
+" }}}
+" Function {{{
+
+" picker#Register(
+"   \ {id},
+"   \ {selection_type},
+"   \ {vim_command},
+"   \ {shell_command}
+"   \ )
+
+"     {id} is a string specifying a unique name used to identify the
+"     user-defined command with |picker#Execute()|.
+
+"     {selection_type} is a string equal to either 'string' or 'file'. 'string'
+"     selections are passed unchanged as a single argument to {vim_command}.
+"     'file' selections are treated as filenames: spaces and special characters
+"     are escaped before executing {vim_command}.
+
+"     {vim_command} is a string specifying the Vim command which will be called
+"     with the user's selection as a single argument.
+
+"     {shell_command} is a string specifying a shell command consisting of
+"     either a single command or a series of piped commands that will generate a
+"     newline separated list of candidates to be piped to the fuzzy selector.
+" }}}
+" Custom Commands {{{
+
+" Knowledge Base {{{
+"```
+call picker#Register(
+  \ 'notes',
+  \ 'file',
+  \ 'edit',
+  \ 'find ~/kkk -name "*.md"'
+  \ )
+"```
+
+" "This command can then be executed using the picker#Execute() function,
+" "which takes the ID of the user-defined command as a single argument:
+
+" call picker#Execute('notes')
+
+" }}}
+" Mappings {{{
+
+" Browser my Knowledge base files
+"```
+nmap <leader>n :call picker#Execute('notes')<CR>
+"```
+
+" }}}
