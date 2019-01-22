@@ -1,0 +1,146 @@
+"      .-.     .-.     .-.     .-.     .-.     .-.     .-.
+" `._.'   `._.'   `._.'   `._.'   `._.'   `._.'   `._.'
+"
+"
+" -----------------------------
+" Nvim Page Mappings:
+" Created: 2019/01/16
+" Last Changed: 2019/01/16
+" -----------------------------
+" vim:ft=vim:ts=2:sw=2:fdm=marker
+"
+"
+"      .-.     .-.     .-.     .-.     .-.     .-.     .-.
+" `._.'   `._.'   `._.'   `._.'   `._.'   `._.'   `._.'
+
+" Manage Bookmarks: {{{
+" -----------------------
+if dein#tap('vim-bookmarks')
+endif
+" }}}
+" Indent Lines: {{{
+" -----------------------
+xnoremap > >gv|
+xnoremap > >gv|
+vmap < <gv
+vmap > >gv
+nmap > >>
+nmap < <<
+" }}}
+" Search And Replace With: C-R {{{
+" -----------------------
+xnoremap <C-r> :<C-u>call <SID>get_selection('/')<CR>:%s/\V<C-R>=@/<CR>//gc<Left><Left><Left>
+" }}}
+" Swtich Visual Mode: {{{
+" -----------------------
+nmap <silent> <Leader><Leader> V
+vmap <Leader><Leader> <Esc>
+" }}}
+" Exit Insert Mode: {{{
+" -----------------------
+inoremap jj <ESC>
+" }}}
+" Paste From Clip With: alt+p {{{
+" -----------------------
+inoremap π <C-R>*
+" }}}
+" Make Y Consistent With C And D: {{{
+" -----------------------
+noremap Y y$
+" }}}
+" Move Between Positions: {{{
+" -----------------------
+" nnoremap gb <c-o> " <c-;>
+" nnoremap gn <c-[>
+" }}}
+" Folding Control: {{{
+" ----------------
+nnoremap zr zR
+nnoremap zm zM
+nnoremap <Leader>z zMzvzz
+nnoremap <c-i> za
+vnoremap <c-i> zf
+nnoremap <CR> zMza
+nnoremap <S-Return> za
+" }}}
+" Cursor Movement: {{{
+" ----------------
+nnoremap H ^
+vnoremap H ^
+nnoremap L g_
+vnoremap L g_
+nnoremap <silent> M :execute 'normal! ' . (virtcol('$')/2) . '\|'<CR>
+vnoremap <silent> M :<c-u>execute 'normal! gv' . (virtcol('$')/2) . '\|'<CR>
+" }}}
+" Move A Lines: {{{
+" ----------------
+nnoremap <silent> mk :<C-U>silent execute 'move--' . v:count1<CR>zO==
+nnoremap <silent> mj :<C-U>silent execute 'move+' . v:count1<CR>zO==
+"alt jk
+inoremap ∆ <Esc>:m .+1<CR>==gi
+inoremap ˚ <Esc>:m .-2<CR>==gi
+nnoremap ∆ <Esc>:m .+1<CR>==gi
+nnoremap ˚ <Esc>:m .-2<CR>==gi
+vnoremap J :m'>+<CR>gv=gv
+vnoremap K :m-2<CR>gv=gv
+" }}}
+" Swap Words: {{{
+" ------------
+" With Next word
+nnoremap <silent> g, "_yiw:s/\(\%#\k\+\)\(\%(\k\@!\_.\)\+\)\(\k\+\)/\3\2\1/<CR><c-o>/\k\+\%(\k\@!\_.\)\+<CR><c-l>:noh<CR>
+" With Previous word
+nnoremap <silent> g<space> "_yiw?\k\+\%(\k\@!\_.\)\+\%#<CR>:s/\(\%#\k\+\)\(\%(\k\@!\_.\)\+\)\(\k\+\)/\3\2\1/<CR><c-o><c-l>:noh<CR>
+" }}}
+" }}}
+" Join A Line: {{{
+" ------------
+nnoremap J mzJ`z
+" }}}
+" Format Line: {{{
+" ------------
+nnoremap gq gwap
+" }}}
+" Sort Lines: {{{
+" ------------
+nnoremap <Leader>sa :sort i<CR>
+vnoremap <Leader>sa :sort i<CR>
+" }}}
+" Duplcate Lines: {{{
+" ---------------
+nnoremap <Leader>d m`YP``
+vnoremap <Leader>d YPgv
+" }}}
+" Change W In Repeatitve Matter: {{{
+" ------------------------------
+nnoremap cn *``cgn
+nnoremap cN *``cgN
+vnoremap <expr> <Leader>cn "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"
+vnoremap <expr> <Leader>cN "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"
+" }}}
+" Replace Word Under Cursor: {{{
+" --------------------------
+nnoremap <Leader>r :%s/\<<C-r><C-w>\>//g<Left><Left>
+" }}}
+" Remove Whitespace:  {{{
+" ------------------
+nnoremap <silent> ,<Leader> :call <SID>DeleteTrailingWhitespace()<CR>
+" }}}
+" Scroling: {{{
+" ---------
+nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ? 'zt' : (winline() == 1) ? 'zb' : 'zz'
+" noremap <expr> <C-f> max([winheight(0) - 2, 1])
+"	\ ."\<C-d>".(line('w$') >= line('$') ? "L" : "M")
+" noremap <expr> <C-b> max([winheight(0) - 2, 1])
+"	\ ."\<C-u>".(line('w0') <= 1 ? "H" : "M")
+" noremap <expr> <C-f> (line("w$") >= line('$') ? "j" : "3\<C-e>")
+" noremap <expr> <C-s> (line("w0") <= 1         ? "k" : "3\<C-y>")
+" }}}
+" Repeat command for each line in selection {{{
+" ------------------
+vnoremap . :normal .<CR>
+" }}}
+" Plugin General Enhancements {{{
+" if dein#tap('vim-operator-flashy')
+" 	map y <Plug>(operator-flashy)
+" 	nmap Y <Plug>(operator-flashy)$
+" endif
