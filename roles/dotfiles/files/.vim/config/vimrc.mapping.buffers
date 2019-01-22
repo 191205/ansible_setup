@@ -1,0 +1,45 @@
+"      .-.     .-.     .-.     .-.     .-.     .-.     .-.
+" `._.'   `._.'   `._.'   `._.'   `._.'   `._.'   `._.'
+"
+"
+" -----------------------------
+" Nvim Buffer management
+" Created: 2019/01/16
+" Last Change:
+" -----------------------------
+" vim:ft=vim:ts=2:sw=2:fdm=marker
+"
+"
+"      .-.     .-.     .-.     .-.     .-.     .-.     .-.
+" `._.'   `._.'   `._.'   `._.'   `._.'   `._.'   `._.'
+
+" Focus BufferSplit:
+" ------------------
+nnoremap <Leader>b :bnext<CR>
+nnoremap <Leader>B :bprev<CR>
+nnoremap [S]b :bn<CR>
+nnoremap [S]B :bp<CR>
+
+" Close BufferSplit:
+" ------------------
+nnoremap <silent> [S]d :bp<bar>sp<bar>bn<bar>bd<CR>
+nnoremap <silent> <LocalLeader>D :bd<CR>
+nnoremap <Leader>cb :bp<bar>sp<bar>bn<bar>bd<CR>
+
+" Create BufferSplit:
+" ------------------
+nnoremap <silent> <Leader>od :new<CR>
+nnoremap <silent> <Leader>or :vnew<CR>
+" a new buffer in null
+nnoremap <expr> <Leader>sb ':edit ' . expand('%:p:h') . '/null/'
+
+" Other:
+" --------
+nnoremap <Leader>y :let @+=expand("%")<CR>:echo 'Relative path copied to clipboard.'<CR>
+nnoremap <Leader>Y :let @+=expand("%:p")<CR>:echo 'Absolute path copied to clipboard.'<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Split current buffer, go to previous window
+" and previous buffer
+nnoremap <silent> [S]r :split<CR>:wincmd p<CR>:e#<CR>
+nnoremap <silent> [S]j :vsplit<CR>:wincmd p<CR>:e#<CR>
