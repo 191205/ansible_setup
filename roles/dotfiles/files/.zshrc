@@ -198,7 +198,7 @@ source $HOME/.zsh/hash
 source $HOME/.zsh/path
 source $HOME/.zsh/vars
 source $HOME/.zsh/fzf-marks.plugin.zsh
-source $HOME/.zsh/zsh-apple-touchbar/zsh-apple-touchbar.zsh
+# source $HOME/.zsh/zsh-apple-touchbar/zsh-apple-touchbar.zsh
 
 
 
