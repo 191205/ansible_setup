@@ -1,0 +1,36 @@
+"      .-.     .-.     .-.     .-.     .-.     .-.     .-.
+" `._.'   `._.'   `._.'   `._.'   `._.'   `._.'   `._.'
+"
+"
+" -----------------------------
+" Nvim Tab Management:
+" Created: 2019/01/16
+" Last Change:
+" -----------------------------
+" vim:ft=vim:ts=2:sw=2:fdm=marker
+"
+"
+"      .-.     .-.     .-.     .-.     .-.     .-.     .-.
+" `._.'   `._.'   `._.'   `._.'   `._.'   `._.'   `._.'
+
+" Create TabFrame:
+" ------------------
+nnoremap <silent> <Leader>nt :tabnew<cr>
+nnoremap <silent> <Leader>ot :tabnew<cr>
+nnoremap <silent> gt :tabnew<cr>
+
+" Focus TabFrame:
+"-------------------
+nnoremap t :tabnext<CR>
+nnoremap T :tabprevious<CR>
+nnoremap g0 :<C-u>tabfirst<CR>
+nnoremap g) :<C-u>tablast<CR>
+
+" Close TabFrame:
+"-------------------
+nnoremap <Leader>ct :tabclose<cr>
+
+" Other TabFrame:
+"-------------------
+"" Open File Under Cursor: in new vim-tab
+nnoremap <Leader>\ g<s-f> <c-w>gf
