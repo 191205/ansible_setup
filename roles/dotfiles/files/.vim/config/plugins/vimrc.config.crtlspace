@@ -1,4 +1,3 @@
-
 noremap <C-Space> :CtrlSpace<CR>
 nnoremap <silent><C-p> :CtrlSpace O<CR>
 
@@ -6,58 +5,34 @@ if executable("ag")
     let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
 endif
 
-let g:CtrlSpaceDefaultMappingKey = "<C-space>"
+
 set nocompatible
 set hidden
 set showtabline=0
 
-hi link CtrlSpaceNormal   PMenu
-hi link CtrlSpaceSelected PMenuSel
-hi link CtrlSpaceSearch   Search
-hi link CtrlSpaceStatus   StatusLine
+" Highlighting group
+" hi link CtrlSpaceSelected PMenuSel
+hi CtrlSpaceSelected term=reverse ctermfg=187  ctermbg=23  cterm=bold
+" hi link CtrlSpaceNormal   PMenu
+hi CtrlSpaceNormal   term=NONE    ctermfg=244  ctermbg=232 cterm=NONE
+" hi link CtrlSpaceSearch   Search
+hi CtrlSpaceSearch   ctermfg=220  ctermbg=NONE cterm=bold
+hi CtrlSpaceStatus   ctermfg=230  ctermbg=234  cterm=NONE
+" hi link CtrlSpaceStatus   StatusLine
 
-" let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
-let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
-let g:CtrlSpaceSaveWorkspaceOnExit = 1
-
-" Features Of VimCtrlSpace: {{{
-"  1 better, modular, and extensible code base
-"  2 simplified, well thought-out, and clear design
-"  3 new fuzzy search engine for files (written in Go)
-"  4 more effective and responsive behavior
-"  5 fine-grained configuration
-" }}}
-
-" Five Types Of Lists: {{{
- " * Buffer List
- " * File List
- " * Tab List
- " * Workspace List
- " * Bookmark List
-" }}}
-
-" Tabs: {{{
-"  * group related buffers
-"  * extract to other tabs
-"  * name them accordingly
-"  * move or copy them
-" }}}
 
 " User Interface: ctrlspace-ui
 let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
-let g:ctrlspace_default_mapping_key = '<C-space>'
-let g:ctrlspace_use_ruby_bindings = 1
+let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
+let g:CtrlSpaceSaveWorkspaceOnExit = 1
+let g:CtrlSpaceHeight = 1
+" let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
+" let g:ctrlspace_default_mapping_key = '<C-space>'
+" let g:ctrlspace_use_ruby_bindings = 1
 
-if executable('ag')
-  let g:ctrlspace_glob_command = 'ag -l --nocolor -g ""'
-endif
-
-hi CtrlSpaceSelected term=reverse ctermfg=187  ctermbg=23  cterm=bold
-hi CtrlSpaceNormal   term=NONE    ctermfg=244  ctermbg=232 cterm=NONE
-hi CtrlSpaceSearch   ctermfg=220  ctermbg=NONE cterm=bold
-hi CtrlSpaceStatus   ctermfg=230  ctermbg=234  cterm=NONE
 
 " nnoremap of :CtrlSpace O<cr>
 " nnoremap ow :CtrlSpace W<cr>
 " nnoremap ob :CtrlSpace B<cr>
+
 " vim:ft=vim:ts=2:sw=2:fdm=marker
