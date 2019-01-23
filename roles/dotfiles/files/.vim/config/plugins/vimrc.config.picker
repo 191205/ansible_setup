@@ -35,12 +35,12 @@ let g:picker_height = 5
 
 " Knowledge Base {{{
 "```
-call picker#Register(
-  \ 'notes',
-  \ 'file',
-  \ 'edit',
-  \ 'find ~/kkk -name "*.md"'
-  \ )
+" call picker#Register(
+"   \ 'wiki',
+"   \ 'file',
+"   \ 'edit',
+"   \ 'find ~/data -name "*.md"'
+"   \ )
 "```
 
 " "This command can then be executed using the picker#Execute() function,
@@ -53,7 +53,7 @@ call picker#Register(
 
 " Browser my Knowledge base files
 "```
-nmap <leader>n :call picker#Execute('notes')<CR>
+" nmap <leader>n :call picker#Execute('wiki')<CR>
 "```
 
 " }}}
