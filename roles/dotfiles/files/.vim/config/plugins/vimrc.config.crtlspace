@@ -1,5 +1,6 @@
 
 let g:CtrlSpaceDefaultMappingKey = "<C-space>"
+noremap <C-Space> :CtrlSpace<CR>
 if executable("ag")
     let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
 endif
@@ -42,7 +43,7 @@ let g:CtrlSpaceSaveWorkspaceOnExit = 1
 
 " User Interface: ctrlspace-ui
 let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
-let g:ctrlspace_default_mapping_key = '<leader><leader>'
+let g:ctrlspace_default_mapping_key = '<C-space>'
 let g:ctrlspace_use_ruby_bindings = 1
 
 if executable('ag')
@@ -54,8 +55,8 @@ hi CtrlSpaceNormal   term=NONE    ctermfg=244  ctermbg=232 cterm=NONE
 hi CtrlSpaceSearch   ctermfg=220  ctermbg=NONE cterm=bold
 hi CtrlSpaceStatus   ctermfg=230  ctermbg=234  cterm=NONE
 
-nnoremap of :CtrlSpace O<cr>
-nnoremap ow :CtrlSpace W<cr>
-nnoremap ob :CtrlSpace B<cr>
+" nnoremap of :CtrlSpace O<cr>
+" nnoremap ow :CtrlSpace W<cr>
+" nnoremap ob :CtrlSpace B<cr>
 
 " vim:ft=vim:ts=2:sw=2:fdm=marker
