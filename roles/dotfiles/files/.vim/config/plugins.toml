@@ -1,0 +1,798 @@
+# -----------------------------------------------------------
+# 0. INIT ----------------------------------------------------
+# -----------------------------------------------------------
+# Core plugins {{{
+
+# dein.vim
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+# dein.vim
+[[plugins]]
+repo = 'wsdjeg/dein-ui.vim'
+
+[[plugins]]
+repo = 'haya14busa/dein-command.vim'
+on_cmd = 'Dein'
+
+# vimproc
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
+# }}}
+#____________________________________________________________
+
+# -----------------------------------------------------------
+# 1. UI -----------------------------------------------------
+# -----------------------------------------------------------
+# Indent Guide {{{
+# Vim-indent-guide {{{
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+on_cmd = [ 'IndentGuidesEnable', 'IndentGuidesDisable', 'IndentGuidesToggle' ]
+hook_add = 'source $VIMPATH/vimrc.config.indent'
+# }}}
+# }}}
+# Foucs Mode {{{
+
+# Goyo
+[[plugins]]
+repo = 'junegunn/goyo.vim'
+depends = 'limelight.vim'
+hook_source = 'source $VIMPATH/vimrc.config.goyo'
+on_cmd = 'Goyo'
+
+
+# lightline
+[[plugins]]
+repo = 'junegunn/limelight.vim'
+on_cmd = 'Limelight'
+
+# }}}
+# Visual Sidemenu {{{
+[[plugins]]
+repo = '191205/vim-sidemenu'
+on_map = '<Plug>'
+# }}}
+# Autoload {{{
+
+# Auto-mkdir
+[[plugins]]
+repo = 'travisjeffery/vim-auto-mkdir'
+
+# Intgration With tmux
+[[plugins]]
+repo = 'christoomey/vim-tmux-navigator'
+
+# Colors
+[[plugins]]
+repo = '191205/awesome-vim-colorschemes'
+
+# Cursor word
+[[plugins]]
+repo = 'itchyny/vim-cursorword'
+
+
+# Matchparen
+[[plugins]]
+repo = 'itchyny/vim-parenmatch'
+
+# Better Asterisk
+[[plugins]]
+repo = 'haya14busa/vim-asterisk'
+on_map = '<Plug>'
+
+
+
+[[plugins]]
+repo = 'terryma/vim-expand-region'
+
+
+
+[[plugins]]
+repo = 'kana/vim-niceblock'
+on_map = {x = '<Plug>'}
+
+
+
+# Speed up j and k
+[[plugins]]
+repo = 'rhysd/accelerated-jk'
+
+
+
+# gj gk jumps
+[[plugins]]
+repo = 'haya14busa/vim-edgemotion'
+
+
+# }}}
+#____________________________________________________________
+
+# -----------------------------------------------------------
+# 2. Major Plugins ------------------------------------------
+# -----------------------------------------------------------
+# Git Manager {{{
+repo = 'lambdalisue/gina.vim'
+# hook_source = 'source $VIMPATH/vimrc.config.gina'
+merged = 0
+hook_add = '''
+nnoremap <silent> <Leader>aa :<C-u>Gina status<CR>
+nnoremap <silent> <Leader>aA :<C-u>Gina changes HEAD<CR>
+nnoremap <silent> <Leader>ac :<C-u>Gina commit<CR>
+nnoremap <silent> <Leader>aC :<C-u>Gina commit --amend<CR>
+nnoremap <silent> <Leader>ab :<C-u>Gina branch -av<CR>
+nnoremap <silent> <Leader>at :<C-u>Gina tag<CR>
+nnoremap <silent> <Leader>ag :<C-u>Gina grep<CR>
+nnoremap <silent> <Leader>aq :<C-u>Gina qrep<CR>
+nnoremap <silent> <Leader>ad :<C-u>Gina changes origin/HEAD...<CR>
+nnoremap <silent> <Leader>al :<C-u>Gina log<CR>
+nnoremap <silent> <Leader>aL :<C-u>Gina log :%<CR>
+nnoremap <silent> <Leader>af :<C-u>Gina ls<CR>
+nnoremap <silent> <Leader>ars :<C-u>Gina show <C-r><C-w><CR>
+nnoremap <silent> <Leader>arc :<C-u>Gina changes <C-r><C-w><CR>
+'''
+hook_post_source = '''
+execute 'source' fnameescape(expand('$VIMPATH/vimrc.config.gina'))
+'''
+# }}}
+# Comment Manager {{{
+
+[[plugins]]
+repo = 'MattesGroeger/vim-bookmarks'
+on_path = '.*'
+hook_source = '''
+let g:bookmark_auto_save_file = $VARPATH.'/bookmarks'
+let g:bookmark_no_default_key_mappings = 1
+let g:bookmark_disable_ctrlp = 1
+	nmap ma :<C-u>cgetexpr bm#location_list()<CR>
+		\ :<C-u>Denite quickfix -buffer-name=list<CR>
+	nmap mn <Plug>BookmarkNext
+	nmap mp <Plug>BookmarkPrev
+	nmap mm <Plug>BookmarkToggle
+	nmap mi <Plug>BookmarkAnnotate
+
+'''
+
+# }}}
+# Wiki Manager {{{
+
+[[plugins]]
+repo = 'vimwiki/vimwiki'
+on_map = '<Plug>'
+on_cmd = [ 'VimwikiIndex', 'VimwikiUISelect' ]'
+hook_add = '''
+let g:vimwiki_use_calendar = 1
+let g:vimwiki_hl_headers = 1
+let g:vimwiki_hl_cb_checked = 1
+let g:vimwiki_autowriteall = 0
+'''
+hook_source = 'source ~/$VIMPATH/vimrc.config.vimwiki'
+
+# }}}
+# Buffer/Tab/Session Manager {{{
+[[plugins]]
+repo = 'vim-ctrlspace/vim-ctrlspace'
+hook_source = 'source $VIMPATH/vimrc.config.ctrlspace'
+# }}}
+# Tag Manager {{{
+[[plugins]]
+repo = 'majutsushi/tagbar'
+on_cmd = 'TagbarToggle'
+hook_source = '''
+let g:tagbar_width = 40
+if executable('jsctags')
+  let g:tagbar_type_javascript = { 'ctagsbin': 'jsctags' }
+endif
+'''
+# }}}
+# File Manager {{{
+[[plugins]]
+repo = 'lambdalisue/fila.vim'
+hook_add = '''
+nnoremap <silent> <Leader>EE :<C-u>FilaDrawer .<CR>
+nnoremap <silent> <Leader>ee :<C-u>Fila<CR>
+nnoremap <silent> <LocalLeader>EE :<C-u>FilaDrawer .<CR>
+nnoremap <silent> <LocalLeader>ee :<C-u>Fila<CR>
+function! s:fila_viewer_init() abort
+  nmap <buffer><expr> <Plug>(fila-custom-smart-enter) fila#drawer#is_drawer(win_getid())
+        \ ? "\<Plug>(fila-action-enter-or-open)\<Plug>(fila-action-tcd)"
+        \ : "\<Plug>(fila-action-enter-or-open)"
+  nmap <buffer><expr> <Plug>(fila-custom-smart-leave) fila#drawer#is_drawer(win_getid())
+        \ ? "\<Plug>(fila-action-leave)\<Plug>(fila-action-tcd)"
+        \ : "\<Plug>(fila-action-leave)"
+  nmap <buffer><nowait> <Enter> <Plug>(fila-custom-smart-enter)
+  nmap <buffer><nowait> <C-m> <Plug>(fila-custom-smart-enter)
+  nmap <buffer><nowait> <Backspace> <Plug>(fila-custom-smart-leave)
+  nmap <buffer><nowait> <C-h> <Plug>(fila-custom-smart-leave)
+  nmap <buffer><nowait> s <Plug>(fila-action-open-select)
+  nmap <buffer><nowait> p <Plug>(fila-action-open-pedit)
+  nmap <buffer><nowait> <C-j> <Plug>(fila-action-mark-toggle)j
+  nmap <buffer><nowait> <C-k> <Plug>(fila-action-mark-toggle)k
+  nmap <buffer><nowait> N  <Plug>(fila-action-new-file)
+  nmap <buffer><nowait> K  <Plug>(fila-action-new-directory)
+  nmap <buffer><nowait> m  <Plug>(fila-action-move)
+  nmap <buffer><nowait> c  <Plug>(fila-action-copy)
+  nmap <buffer><nowait> p  <Plug>(fila-action-paste)
+  nmap <buffer><nowait> d  <Plug>(fila-action-delete)
+endfunction
+autocmd MyAutoCmd User FilaViewerInit call s:fila_viewer_init()
+'''
+## TODO test obaland/vfiler.vim
+# }}}
+# Templete Engine {{{
+[[plugins]]
+repo = 'thinca/vim-template'
+hook_add = '''
+autocmd User plugin-template-loaded call s:template_keywords()
+function! s:template_keywords() abort
+  silent! %s/<+FILE NAME+>/\=expand('%:t')/g
+  silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
+  silent! %s/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge
+  if search('<+CURSOR+>')
+    execute 'normal! "_da>'
+  endif
+endfunction
+'''
+# }}}
+#____________________________________________________________
+
+### # -----------------------------------------------------------
+### # 3. Major Functions ----------------------------------------
+### # -----------------------------------------------------------
+### # Neomake {{{
+### # [[plugins]]
+### # repo = 'benekastah/neomake'
+### # on_cmd = [ 'Neomake', 'NeomakeFile', 'NeomakeEnable' ]
+### # hook_source = 'source $VIMPATH/config/ex/settings/neomake.vim'
+### # hook_add: '''
+### # let g:lint_types = [
+### # \  'yaml.ansible', 'python', 'php', 'ruby', 'vim', 'go', 'sh',
+### # \  'javascript', 'jsx', 'javascript.jsx', 'json', 'css',
+### # \  'markdown', 'html', 'yaml'
+### # \ ]
+### # autocmd MyAutoCmd BufWritePost *
+### # \  if expand('%:p') !~ $VIMPATH
+### # \      && index(g:lint_types, &filetype) > -1
+### # \      && empty(&buftype)
+### # \|   Neomake
+### # \| endif
+### # '''
+### ## }}}
+### # Fuzzy Search {{{
+### # test-01 {{{
+### [[plugins]]
+### repo = 'cloudhead/neovim-fuzzy'
+### on_cmd = [ 'FuzzyGrep', 'FuzzyOpen', 'FuzzyKill' ]
+### # }}}
+### # test-02 {{{
+### repo = 'srstevenson/vim-picker'
+### on_cmd = [ 'PickerEdit', 'PickerListUserCommands', 'PickerBuffer' ]
+### on_map = '<Plug>'
+### hook_source = 'source $VIMPATH/vimrc.config.picker'
+### # }}}
+### # }}}
+### # Directory Configuration File  {{{
+###
+### [[plugins]]
+### repo = 'thinca/vim-localrc'
+###
+### [[plugins]]
+### repo = 'RRethy/nvim-sourcerer'
+###
+### [[plugins]]
+### repo = 'viniarck/tmuxdir.nvim'
+###
+### ## Wiki Root Dir
+### # Root of Project
+### ## }}}
+### # Web-browsering {{{
+### [[plugins]]
+### repo = 'tyru/open-browser.vim'
+### normalized_name='openbrowser'
+### hook_add = '''
+### let g:netrw_nogx = 1 " disable netrw's gx mapping
+### nmap gx <Plug>(openbrowser-smart-search)
+### xmap gx <Plug>(openbrowser-smart-search)
+### '''
+### on_map = '<Plug>'
+### on_cmd = [ 'OpenBrowser', 'OpenBrowserSearch', 'OpenBrowserSmartSearch' ]
+###
+### repo = 'tyru/open-browser-unicode.vim'
+### depends = 'open-browser.vim'
+### on_cmd = 'OpenBrowserUnicode'
+###
+### repo = 'tyru/open-browser-github.vim'
+### depends = 'open-browser.vim'
+### on_cmd = [ 'OpenGithubFile', 'OpenGithubIssue', 'OpenGithubProject' ]
+### # }}}
+### # Man pager {{{
+### [[plugins]]
+### repo = 'lambdalisue/vim-manpager'
+### on_cmd = ['MANPAGER', 'Man']
+### # }}}
+### # FastFold {{{
+### [[plugins]]
+### repo = 'Konfekt/FastFold'
+### hook_add = '''
+### let g:markdown_folding = 1
+### let g:tex_fold_enabled = 1
+### let g:vimsyn_folding = 'af'
+### let g:xml_syntax_folding = 1
+### let g:javaScript_fold = 1
+### let g:sh_fold_enabled= 7
+### let g:ruby_fold = 1
+### let g:perl_fold = 1
+### let g:perl_fold_blocks = 1
+### let g:r_syntax_folding = 1
+### let g:rust_fold = 1
+### let g:php_folding = 1
+### let g:fastfold_savehook = 1
+### let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+### let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+### nmap zuz <Plug>(FastFoldUpdate)
+### xnoremap iz :<C-u>FastFoldUpdate<CR><Esc>:<C-u>normal! ]zv[z<CR>
+### xnoremap az :<C-u>FastFoldUpdate<CR><Esc>:<C-u>normal! ]zV[z<CR>
+### '''
+### # }}}
+### # Comment {{{
+### [[plugins]]
+### repo = 'tomtom/tcomment_vim'
+###
+### [[plugins]]
+### repo = 'kana/vim-repeat'
+### hook_add = '''
+### nmap .     <Plug>(repeat-.)
+### nmap u     <Plug>(repeat-u)
+### nmap U     <Plug>(repeat-U)
+### nmap <C-r> <Plug>(repeat-<C-r>)
+### nmap g-    <Plug>(repeat-g-)
+### nmap g+    <Plug>(repeat-g+)
+### '''
+###
+### [[plugins]]
+### repo = 'Shougo/context_filetype.vim'
+###
+### [[plugins]]
+### repo = 'tyru/caw.vim'
+### depends = [
+###   'vim-operator-user',
+###   'vim-repeat',
+###   'context_filetype.vim',
+### ]
+### hook_add = '''
+### let g:caw_no_default_keymappings = 1
+### nmap gc   <Plug>(caw:prefix)
+### nmap gcc  <Plug>(caw:hatpos:toggle)
+### nmap gci  <Plug>(caw:hatpos:comment)
+### nmap gcui <Plug>(caw:hatpos:uncomment)
+### nmap gcI  <Plug>(caw:zeropos:comment)
+### nmap gcuI <Plug>(caw:zeropos:uncomment)
+### nmap gca  <Plug>(caw:dollarpos:comment)
+### nmap gcua <Plug>(caw:dollarpos:uncomment)
+### nmap gcw  <Plug>(caw:wrap:toggle)
+### nmap gcb  <Plug>(caw:box:comment)
+### xmap gc   <Plug>(caw:prefix)
+### xmap gcc  <Plug>(caw:hatpos:toggle)
+### xmap gci  <Plug>(caw:hatpos:comment)
+### xmap gcui <Plug>(caw:hatpos:uncomment)
+### xmap gcI  <Plug>(caw:zeropos:comment)
+### xmap gcuI <Plug>(caw:zeropos:uncomment)
+### xmap gca  <Plug>(caw:dollarpos:comment)
+### xmap gcua <Plug>(caw:dollarpos:uncomment)
+### xmap gcw  <Plug>(caw:wrap:toggle)
+### xmap gcb  <Plug>(caw:box:comment)
+### nmap gco  <Plug>(caw:jump:comment-next)
+### nmap gcO  <Plug>(caw:jump:comment-prev)
+### '''
+### # }}}
+### # Replace Words {{{
+### [[plugins]]
+### repo = 'kana/vim-operator-replace'
+### depends = 'vim-operator-user'
+### hook_add = '''
+###    xmap p <Plug>(operator-replace)
+### '''
+### # }}}
+### #____________________________________________________________
+###
+### # -----------------------------------------------------------
+### # 4. Writting -----------------------------------------------
+### # -----------------------------------------------------------
+### # Markdown Syntax {{{
+###
+### [[plugins]]
+### repo = 'plasticboy/vim-markdown'
+### hook_add = '''
+###   let g:vim_markdown_folding_level = 6
+###   let g:vim_markdown_emphasis_multiline = 0
+###   let g:vim_markdown_conceal = 0
+###   let g:vim_markdown_frontmatter = 1
+###   let g:vim_markdown_new_list_item_indent = 2
+###   let g:vim_markdown_edit_url_in = 'vsplit'
+###   let g:vim_markdown_fenced_languages = [
+###     \ 'c++=cpp',
+###     \ 'viml=vim',
+###     \ 'bash=sh',
+###     \ 'ini=dosini',
+###     \ 'js=javascript',
+###     \ 'json=javascript',
+###     \ 'docker=Dockerfile',
+###     \ 'makefile=make',
+###     \ 'py=python'
+###     \ ]
+### '''
+###
+### [[plugins]]
+### repo = 'rhysd/vim-gfm-syntax'
+### depends = 'vim-markdown'
+### on_ft = 'markdown'
+### hook_source = '''
+###   let g:gfm_syntax_enable_always = 0
+###   let g:gfm_syntax_highlight_emoji = 0
+###   let g:gfm_syntax_enable_filetypes = ['markdown']
+###   '''
+### ## }}}
+### # Spelling fixs {{{
+### [[plugins]]
+### repo = 'tweekmonster/spellrotate.vim'
+### on_map = '<Plug>'
+### hook_add = '''
+### nmap gn <Plug>(SpellRotateForward)
+### nmap gp <Plug>(SpellRotateBackward)
+### vmap gn <Plug>(SpellRotateForwardV)
+### vmap gp <Plug>(SpellRotateBackwardV)
+### '''
+###
+### [[plugins]]
+### repo = 'reedes/vim-litecorrect'
+### # }}}
+### # Highlight words {{{
+###
+### # Vim Quickhl
+### [[plugins]]
+### repo = 't9md/vim-quickhl'
+### on_map = '<Plug>'
+### hook_source = '''
+### nmap <Leader>, <Plug>(quickhl-manual-this)
+### xmap <Leader>, <Plug>(quickhl-manual-this)
+### '''
+### }}}
+### # Generate Table of Content {{{
+###
+### # [[plugins]]
+### # repo = 'mzlogin/vim-markdown-toc'
+### # on_cmd = [ 'GenTocGFM', 'GenTocRedcarpet', 'GenTocGitLab', 'UpdateToc' ]
+### # hook_source = 'let g:vmt_auto_update_on_save = 0'
+###
+### # }}}
+### # Emojis (0_0) {{{
+### # repo = fszymanski/deoplete-emoji
+### #   on_ft: [ markdown, gitcommit ]
+### #   on_event: InsertEnter
+###
+### # }}}
+### # Readiblity {{{
+###
+### # [[plugins]]
+### # repo = 'bmihai/nanootl'
+###
+### # }}}
+### # Lookup Defintion {{{
+###
+### # [[plugins]]
+### # repo = 'beloglazov/vim-online-thesaurus'
+### # on_cmd = [ 'OnlineThesaurusCurrentWord', 'Thesaurus' ]
+### # hook_source = 'let g:online_thesaurus_map_keys = 0'
+###
+### # [[plugins]]
+### # repo = 'ron89/thesaurus_query.vim'
+###
+### ## }}}
+### # Gramear {{{
+### # [[plugins]]
+### # repo = 'dpelle/vim-LanguageTool'
+### #
+### # [[plugins]]
+### # repo = 'rhysd/vim-grammarous'
+### # }}}
+### # Workflow {{{
+### # [[plugins]]
+### # repo = 'Reikim/mdwa.vim'
+###
+### # [[plugins]]
+### # repo = 'yever/rtl.vim'
+###
+### # [[plugins]]
+### # repo = 'pulls/vimtex'
+###
+### # [[plugins]]
+### # repo = 'brennier/quicktex'
+### # }}}
+### # Live Preview {{{
+### # [[plugins]]
+### # repo = 'kannokanno/previm'
+### # depends = 'open-browser.vim'
+### # hook_add = 'let g:previm_show_header = 0'
+### # }}}
+### # Easy Align {{{
+###
+### [[plugins]]
+### repo = 'junegunn/vim-easy-align'
+### on_map = '<Plug>(EasyAlign)'
+### hook_add = '''
+### vmap ga <Plug>(EasyAlign)
+### nmap ga <Plug>(EasyAlign)
+### '''
+### # }}}
+### #____________________________________________________________
+###
+### # -----------------------------------------------------------
+### # 5. Integration --------------------------------------------
+### # -----------------------------------------------------------
+### # Dockerfile {{{
+### [[plugins]]
+### repo = 'ekalinin/Dockerfile.vim'
+### on_ft = '[ Dockerfile, yaml.docker-compose ]'
+### # }}}
+### # Ansible {{{
+### [[plugins]]
+### repo = 'pearofducks/ansible-vim'
+### on_ft = '[ yaml.ansible, ansible_hosts ]'
+### # }}}
+### # Python {{{
+### [[plugins]]
+### repo = 'Vimjas/vim-python-pep8-indent'
+### on_ft = 'python'
+###
+### [[plugins]]
+### repo = 'vim-scripts/python_match.vim'
+### on_ft = 'python'
+###
+### [[plugins]]
+### repo = 'tmhedberg/SimpylFold'
+### on_ft = 'python'
+###
+### [[plugins]]
+### repo = 'raimon49/requirements.txt.vim'
+### on_ft = 'requirements'
+### # }}}
+### # Terminal {{{
+### [[plugins]]
+### repo = 'kassio/neoterm'
+### if = "has('nvim')"
+### hook_add = '''
+### source ~/.config/nvim/plugins/neoterm.rc.vim
+### '''
+###
+### # }}}
+### # other {{{
+### [[plugins]]
+### repo = 'andreshazard/vim-logreview'
+### on_ft = 'logreview'
+###
+### [[plugins]]
+### repo = 'othree/nginx-contrib-vim'
+### on_ft = 'nginx'
+### # }}}
+### # -----------------------------------------------------------
+### # 6. Completion ---------------------------------------------
+### # -----------------------------------------------------------
+### # Completion Engine {{{
+### [[plugins]]
+### repo = 'roxma/nvim-yarp'
+### hook_add='''
+### if !has('nvim')
+###   call dein#add('roxma/vim-hug-neovim-rpc')
+### endif
+### '''
+###
+### [[plugins]]
+### repo = 'ncm2/ncm2'
+### depend = 'nvim-yarp'
+### hook_add='''
+### source ~/$VARPATH/vimrc.config.ncm2
+### '''
+### # }}}
+### # Completion sources {{{
+### [[plugins]]
+### repo = 'ncm2/ncm2-bufword'
+### depend = 'ncm2'
+###
+### [[plugins]]
+### repo = 'ncm2/ncm2-path'
+### depend = 'ncm2'
+###
+### [[plugins]]
+### repo = 'ncm2/ncm2-github'
+### depend = 'ncm2'
+###
+### [[plugins]]
+### repo = 'ncm2/ncm2-tmux'
+### depend = 'ncm2'
+###
+### [[plugins]]
+### repo = 'ncm2/ncm2-tagprefix'
+### depend = 'ncm2'
+###
+### [[plugins]]
+### repo = 'filipekiss/ncm2-look.vim'
+### depend = 'ncm2'
+###
+### [[plugins]]
+### repo = 'ncm2/ncm2-path'
+### depend = 'ncm2'
+###
+### [[plugins]]
+### repo = 'jsfaint/gen_tags.vim'
+### depend = 'ncm2'
+###
+### [[plugins]]
+### repo = 'Shougo/neco-syntax'
+### depend = 'ncm2'
+###
+### [[plugins]]
+### repo = 'ncm2/ncm2-syntax'
+### depends = ['ncm2', 'ncm2-syntax']
+###
+### [[plugins]]
+### repo = 'Shougo/neoinclude.vim'
+###
+### [[plugins]]
+### repo = 'ncm2/ncm2-neoinclude'
+### depends = ['ncm2', 'neoinclude.vim']
+### #}}}
+### # Snippet Engine {{{
+### [[plugins]]
+### # ultisnips engine
+### repo = 'SirVer/ultisnips'
+### # always enabled, even in plain text
+### depends = ['ncm2', 'ultisnips']
+### hook_add = '''
+### let g:UltiSnipsExpandTrigger="<Plug>(ultisnips_expand)"
+### let g:UltiSnipsJumpForwardTrigger="<C-j>"
+### let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+### let g:UltiSnipsListSnippets="<C-l>"
+### '''
+###
+### [[plugins]]
+### # ultisnips snippets
+### repo = 'honza/vim-snippets'
+###
+### [[plugins]]
+### repo = 'ncm2/ncm2-ultisnips'
+### depends = ['ncm2']
+### hook_add = '''
+### inoremap <silent> <expr> <C-j> ncm2_ultisnips#expand_or("\<C-j>", 'n')
+### '''
+### # }}}
+### # Utility {{{
+### [[plugins]]
+### repo = 'ncm2/ncm2-match-highlight'
+### depend = 'ncm2'
+###
+### [[plugins]]
+### repo = 'ncm2/ncm2-highprio-pop'
+### depend = 'ncm2'
+### # }}}
+### # Filetype {{{
+### [[plugins]]
+### repo = 'ncm2/ncm2-html-subscope'
+### depend = 'ncm2'
+### on_ft = 'html'
+###
+### [[plugins]]
+### repo = 'ncm2/ncm2-markdown-subscope'
+### depend = 'ncm2'
+### on_ft = 'markdown'
+###
+### [[plugins]]
+### repo = 'autozimu/LanguageClient-neovim'
+### rev = 'next'
+### build = 'bash install.sh'
+### hook_add = '''
+### let g:LanguageClient_serverCommands = {
+###     \ 'rust': ['rls'],
+###     \ 'python': ['pyls'],
+###     \ }
+### nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+### nnoremap <silent> <leader>f :call LanguageClient#textDocument_formatting()<CR>
+### nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+### nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+### '''
+### # }}}
+### #____________________________________________________________
+###
+### # -----------------------------------------------------------
+### # 7. Demnu --------------------------------------------------
+### # -----------------------------------------------------------
+###
+### [[plugins]]
+### repo = 'Shougo/junkfile.vim'
+### # on_cmd = 'JunkfileOpen'
+### on_source = 'denite.nvim'
+###
+###
+###
+### # -----------------------------------------------------------
+### # 8. Other --------------------------------------------------
+### # -----------------------------------------------------------
+### # App {{{
+###
+### [[plugins]]
+### repo = 'lambdalisue/battery.vim'
+### hook_add = '''
+### let g:battery#update_tabline = 1
+### '''
+###
+### [[plugins]]
+### repo = 'lambdalisue/wifi.vim'
+### hook_add = '''
+### let g:wifi#update_tabline = 1
+### '''
+###
+### [[plugins]]
+### repo = 'rhysd/devdocs.vim'
+### hook_add = '''
+### nmap <F1> <Plug>(devdocs-under-cursor)
+### '''
+###
+### [[plugins]]
+### repo = 'koturn/vim-replica'
+### on_cmd = ['Replica', 'ReplicaInternal']
+### hook_add = '''
+### let g:replica#prompt = '» '
+### let g:replica#opener = 'botright vsplit'
+### '''
+###
+### [[plugins]]
+### repo = 'thinca/vim-ref'
+### on_cmd = 'Ref'
+###
+### [[plugins]]
+### repo = 'mbbill/undotree'
+### on_cmd = 'UndotreeToggle'
+### hook_add = '''
+### nnoremap <silent> <Leader>uu :<C-u>UndotreeToggle<CR>
+### '''
+### # }}}
+### # Other {{{
+### # Align
+### [[plugins]]
+### repo = 'vim-scripts/Align'
+###
+### # surround.vim
+### [[plugins]]
+### repo = 'tpope/vim-surround'
+###
+### # }}}
+### # textobj-user {{{
+### [[plugins]]
+### repo = 'kana/vim-textobj-user'
+###
+### [[plugins]]
+### repo = 'kana/vim-operator-user'
+### # }}}
+### # Utility {{{
+###
+### # Helpを日本語化
+### [[plugins]]
+### repo = 'vim-jp/vimdoc-ja'
+### # 検索・置換機能強化
+### [[plugins]]
+### repo = 'tpope/vim-abolish'
+### # インデント表示
+### [[plugins]]
+### repo = 'Yggdroot/indentLine'
+### # マークを可視化
+### [[plugins]]
+### repo = 'jacquesbh/vim-showmarks'
+###
+### [[plugins]]
+### repo = 'w0rp/ale'
+###
+### [[plugins]]
+### repo = 'mbbill/undotree'
+### on_cmd = 'UndotreeToggle'
+### # }}}

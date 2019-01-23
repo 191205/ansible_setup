@@ -113,34 +113,30 @@ if has('vim_starting')
 endif
 
 " Initialize dein.vim (package manager) ----------------------------------------
-let s:path = expand('$VARPATH/dein')
-let s:plugins_path = expand('$VIMPATH/config/plugins.yaml')
-let s:user_plugins_path = expand('$VIMPATH/config/local.plugins.yaml')
-if dein#load_state(s:path)
-	call dein#begin(s:path, [expand('<sfile>'), s:plugins_path])
-	try
-		call s:dein_load_yaml(s:plugins_path)
-		if filereadable(s:user_plugins_path)
-			call s:dein_load_yaml(s:user_plugins_path)
-		endif
-	catch /.*/
-		echoerr v:exception
-		echomsg 'Error loading config/plugins.yaml...'
-		echomsg 'Caught: ' v:exception
-		echoerr 'Please run: pip3 install --user PyYAML'
-	endtry
 
-	if isdirectory(expand('$VIMPATH/dev'))
-		call dein#local(expand('$VIMPATH/dev'), {'frozen': 1, 'merged': 0})
-	endif
-	call dein#end()
-	call dein#save_state()
-	if dein#check_install()
-		if ! has('nvim')
-			set nomore
-		endif
-		call dein#install()
-	endif
+let s:path = expand('$VARPATH/dein')
+let s:dein_path = expand('$VARPATH/dein')
+" let s:plugins_path = expand('$VIMPATH/config/plugins.yaml')
+" let s:user_plugins_path = expand('$VIMPATH/config/local.plugins.yaml')
+let s:dein_repo_path = s:dein_path . '/repos/github.com/Shougo/dein.vim'
+
+if dein#load_state(s:dein_path)
+  call dein#begin(s:dein_path)
+    let g:config_dir  = expand('$VIMPATH/config')
+    let s:toml        = g:config_dir . '/plugins.toml'
+    " let s:lazy_toml   = g:config_dir . '/plugins_lazy.toml'
+
+    " TOML
+    call dein#load_toml(s:toml,      {'lazy': 0})
+    " call dein#load_toml(s:lazy_toml, {'lazy': 1})
+  call dein#end()
+  call dein#save_state()
+  if dein#check_install()
+      if ! has('nvim')
+	  set nomore
+      endif
+      call dein#install()
+  endif
 endif
 
 " call s:source_file('plugins/all.vim')
