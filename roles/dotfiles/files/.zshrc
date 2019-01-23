@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------------------------------------
 [[ -z $PS1 ]] && export PATH="$PATH:/usr/local/bin" && return
-
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 # Global -----------------------------------------------------------------------
 
 # Create a hash table for globally stashing variables {{{
