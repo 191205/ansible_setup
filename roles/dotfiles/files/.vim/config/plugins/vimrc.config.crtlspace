@@ -1,10 +1,12 @@
 
-let g:CtrlSpaceDefaultMappingKey = "<C-space>"
 noremap <C-Space> :CtrlSpace<CR>
+nnoremap <silent><C-p> :CtrlSpace O<CR>
+
 if executable("ag")
     let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
 endif
 
+let g:CtrlSpaceDefaultMappingKey = "<C-space>"
 set nocompatible
 set hidden
 set showtabline=0
@@ -58,5 +60,4 @@ hi CtrlSpaceStatus   ctermfg=230  ctermbg=234  cterm=NONE
 " nnoremap of :CtrlSpace O<cr>
 " nnoremap ow :CtrlSpace W<cr>
 " nnoremap ob :CtrlSpace B<cr>
-
 " vim:ft=vim:ts=2:sw=2:fdm=marker
