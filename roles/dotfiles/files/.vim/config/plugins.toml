@@ -84,10 +84,8 @@ repo = 'haya14busa/vim-asterisk'
 on_map = '<Plug>'
 
 
-
 [[plugins]]
 repo = 'terryma/vim-expand-region'
-
 
 
 [[plugins]]
@@ -241,162 +239,151 @@ endfunction
 ### # -----------------------------------------------------------
 ### # 3. Major Functions ----------------------------------------
 ### # -----------------------------------------------------------
-### # Neomake {{{
-### # [[plugins]]
-### # repo = 'benekastah/neomake'
-### # on_cmd = [ 'Neomake', 'NeomakeFile', 'NeomakeEnable' ]
-### # hook_source = 'source $VIMPATH/config/plugins/vimrc.config.neomake'
-### # hook_add: '''
-### # let g:lint_types = [
-### # \  'yaml.ansible', 'python', 'php', 'ruby', 'vim', 'go', 'sh',
-### # \  'javascript', 'jsx', 'javascript.jsx', 'json', 'css',
-### # \  'markdown', 'html', 'yaml'
-### # \ ]
-### # autocmd MyAutoCmd BufWritePost *
-### # \  if expand('%:p') !~ $VIMPATH
-### # \      && index(g:lint_types, &filetype) > -1
-### # \      && empty(&buftype)
-### # \|   Neomake
-### # \| endif
-### # '''
-### ## }}}
-### # Fuzzy Search {{{
-### # test-01 {{{
-### [[plugins]]
-### repo = 'cloudhead/neovim-fuzzy'
-### on_cmd = [ 'FuzzyGrep', 'FuzzyOpen', 'FuzzyKill' ]
-### # }}}
-### # test-02 {{{
-### repo = 'srstevenson/vim-picker'
-### on_cmd = [ 'PickerEdit', 'PickerListUserCommands', 'PickerBuffer' ]
-### on_map = '<Plug>'
-### hook_source = 'source $VIMPATH/config/plugins/vimrc.config.picker'
-### # }}}
-### # }}}
-### # Directory Configuration File  {{{
-###
-### [[plugins]]
-### repo = 'thinca/vim-localrc'
-###
-### [[plugins]]
-### repo = 'RRethy/nvim-sourcerer'
-###
-### [[plugins]]
-### repo = 'viniarck/tmuxdir.nvim'
-###
-### ## Wiki Root Dir
-### # Root of Project
-### ## }}}
-### # Web-browsering {{{
-### [[plugins]]
-### repo = 'tyru/open-browser.vim'
-### normalized_name='openbrowser'
-### hook_add = '''
-### let g:netrw_nogx = 1 " disable netrw's gx mapping
-### nmap gx <Plug>(openbrowser-smart-search)
-### xmap gx <Plug>(openbrowser-smart-search)
-### '''
-### on_map = '<Plug>'
-### on_cmd = [ 'OpenBrowser', 'OpenBrowserSearch', 'OpenBrowserSmartSearch' ]
-###
-### repo = 'tyru/open-browser-unicode.vim'
-### depends = 'open-browser.vim'
-### on_cmd = 'OpenBrowserUnicode'
-###
-### repo = 'tyru/open-browser-github.vim'
-### depends = 'open-browser.vim'
-### on_cmd = [ 'OpenGithubFile', 'OpenGithubIssue', 'OpenGithubProject' ]
-### # }}}
-### # Man pager {{{
-### [[plugins]]
-### repo = 'lambdalisue/vim-manpager'
-### on_cmd = ['MANPAGER', 'Man']
-### # }}}
-### # FastFold {{{
-### [[plugins]]
-### repo = 'Konfekt/FastFold'
-### hook_add = '''
-### let g:markdown_folding = 1
-### let g:tex_fold_enabled = 1
-### let g:vimsyn_folding = 'af'
-### let g:xml_syntax_folding = 1
-### let g:javaScript_fold = 1
-### let g:sh_fold_enabled= 7
-### let g:ruby_fold = 1
-### let g:perl_fold = 1
-### let g:perl_fold_blocks = 1
-### let g:r_syntax_folding = 1
-### let g:rust_fold = 1
-### let g:php_folding = 1
-### let g:fastfold_savehook = 1
-### let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
-### let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
-### nmap zuz <Plug>(FastFoldUpdate)
-### xnoremap iz :<C-u>FastFoldUpdate<CR><Esc>:<C-u>normal! ]zv[z<CR>
-### xnoremap az :<C-u>FastFoldUpdate<CR><Esc>:<C-u>normal! ]zV[z<CR>
-### '''
-### # }}}
-### # Comment {{{
-### [[plugins]]
-### repo = 'tomtom/tcomment_vim'
-###
-### [[plugins]]
-### repo = 'kana/vim-repeat'
-### hook_add = '''
-### nmap .     <Plug>(repeat-.)
-### nmap u     <Plug>(repeat-u)
-### nmap U     <Plug>(repeat-U)
-### nmap <C-r> <Plug>(repeat-<C-r>)
-### nmap g-    <Plug>(repeat-g-)
-### nmap g+    <Plug>(repeat-g+)
-### '''
-###
-### [[plugins]]
-### repo = 'Shougo/context_filetype.vim'
-###
-### [[plugins]]
-### repo = 'tyru/caw.vim'
-### depends = [
-###   'vim-operator-user',
-###   'vim-repeat',
-###   'context_filetype.vim',
-### ]
-### hook_add = '''
-### let g:caw_no_default_keymappings = 1
-### nmap gc   <Plug>(caw:prefix)
-### nmap gcc  <Plug>(caw:hatpos:toggle)
-### nmap gci  <Plug>(caw:hatpos:comment)
-### nmap gcui <Plug>(caw:hatpos:uncomment)
-### nmap gcI  <Plug>(caw:zeropos:comment)
-### nmap gcuI <Plug>(caw:zeropos:uncomment)
-### nmap gca  <Plug>(caw:dollarpos:comment)
-### nmap gcua <Plug>(caw:dollarpos:uncomment)
-### nmap gcw  <Plug>(caw:wrap:toggle)
-### nmap gcb  <Plug>(caw:box:comment)
-### xmap gc   <Plug>(caw:prefix)
-### xmap gcc  <Plug>(caw:hatpos:toggle)
-### xmap gci  <Plug>(caw:hatpos:comment)
-### xmap gcui <Plug>(caw:hatpos:uncomment)
-### xmap gcI  <Plug>(caw:zeropos:comment)
-### xmap gcuI <Plug>(caw:zeropos:uncomment)
-### xmap gca  <Plug>(caw:dollarpos:comment)
-### xmap gcua <Plug>(caw:dollarpos:uncomment)
-### xmap gcw  <Plug>(caw:wrap:toggle)
-### xmap gcb  <Plug>(caw:box:comment)
-### nmap gco  <Plug>(caw:jump:comment-next)
-### nmap gcO  <Plug>(caw:jump:comment-prev)
-### '''
-### # }}}
-### # Replace Words {{{
-### [[plugins]]
-### repo = 'kana/vim-operator-replace'
-### depends = 'vim-operator-user'
-### hook_add = '''
-###    xmap p <Plug>(operator-replace)
-### '''
-### # }}}
-### #____________________________________________________________
-###
+# Neomake {{{
+# [[plugins]]
+# repo = 'benekastah/neomake'
+# on_cmd = [ 'Neomake', 'NeomakeFile', 'NeomakeEnable' ]
+# hook_source = 'source $VIMPATH/config/plugins/vimrc.config.neomake'
+# hook_add:'''
+#
+# '''
+# }}}
+# Fuzzy Search {{{
+# test-01 {{{
+[[plugins]]
+repo = 'cloudhead/neovim-fuzzy'
+on_cmd = [ 'FuzzyGrep', 'FuzzyOpen', 'FuzzyKill' ]
+# }}}
+# test-02 {{{
+repo = 'srstevenson/vim-picker'
+# on_cmd = [ 'PickerEdit', 'PickerListUserCommands', 'PickerBuffer' ]
+# on_map = '<Plug>'
+hook_source = 'source $VIMPATH/config/plugins/vimrc.config.picker'
+# }}}
+# }}}
+# Directory Configuration File  {{{
+
+[[plugins]]
+repo = 'thinca/vim-localrc'
+
+[[plugins]]
+repo = 'RRethy/nvim-sourcerer'
+
+[[plugins]]
+repo = 'viniarck/tmuxdir.nvim'
+
+## Wiki Root Dir
+# Root of Project
+## }}}
+# Web-browsering {{{
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_map = '<Plug>'
+on_cmd = [ 'OpenBrowser', 'OpenBrowserSearch', 'OpenBrowserSmartSearch' ]
+hook_add = '''
+let g:netrw_nogx = 1 " disable netrw's gx mapping
+nmap gx <Plug>(openbrowser-smart-search)
+xmap gx <Plug>(openbrowser-smart-search)
+'''
+
+# repo = 'tyru/open-browser-unicode.vim'
+# depends = 'open-browser.vim'
+# on_cmd = 'OpenBrowserUnicode'
+
+# repo = 'tyru/open-browser-github.vim'
+# depends = 'open-browser.vim'
+# on_cmd = [ 'OpenGithubFile', 'OpenGithubIssue', 'OpenGithubProject' ]
+# }}}
+# Man pager {{{
+[[plugins]]
+repo = 'lambdalisue/vim-manpager'
+on_cmd = ['MANPAGER', 'Man']
+# }}}
+# FastFold {{{
+[[plugins]]
+repo = 'Konfekt/FastFold'
+hook_add = '''
+let g:markdown_folding = 1
+let g:tex_fold_enabled = 1
+let g:vimsyn_folding = 'af'
+let g:xml_syntax_folding = 1
+let g:javaScript_fold = 1
+let g:sh_fold_enabled= 7
+let g:ruby_fold = 1
+let g:perl_fold = 1
+let g:perl_fold_blocks = 1
+let g:r_syntax_folding = 1
+let g:rust_fold = 1
+let g:php_folding = 1
+let g:fastfold_savehook = 1
+let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+nmap zuz <Plug>(FastFoldUpdate)
+xnoremap iz :<C-u>FastFoldUpdate<CR><Esc>:<C-u>normal! ]zv[z<CR>
+xnoremap az :<C-u>FastFoldUpdate<CR><Esc>:<C-u>normal! ]zV[z<CR>
+'''
+# }}}
+# Comment {{{
+[[plugins]]
+repo = 'tpope/vim-commentary'
+
+# [[plugins]]
+# repo = 'kana/vim-repeat'
+# hook_add = '''
+# nmap .     <Plug>(repeat-.)
+# nmap u     <Plug>(repeat-u)
+# nmap U     <Plug>(repeat-U)
+# nmap <C-r> <Plug>(repeat-<C-r>)
+# nmap g-    <Plug>(repeat-g-)
+# nmap g+    <Plug>(repeat-g+)
+# '''
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+depends = [
+  'vim-operator-user',
+  'vim-repeat',
+  'context_filetype.vim',
+]
+hook_add = '''
+let g:caw_no_default_keymappings = 1
+nmap gc   <Plug>(caw:prefix)
+nmap gcc  <Plug>(caw:hatpos:toggle)
+nmap gci  <Plug>(caw:hatpos:comment)
+nmap gcui <Plug>(caw:hatpos:uncomment)
+nmap gcI  <Plug>(caw:zeropos:comment)
+nmap gcuI <Plug>(caw:zeropos:uncomment)
+nmap gca  <Plug>(caw:dollarpos:comment)
+nmap gcua <Plug>(caw:dollarpos:uncomment)
+nmap gcw  <Plug>(caw:wrap:toggle)
+nmap gcb  <Plug>(caw:box:comment)
+xmap gc   <Plug>(caw:prefix)
+xmap gcc  <Plug>(caw:hatpos:toggle)
+xmap gci  <Plug>(caw:hatpos:comment)
+xmap gcui <Plug>(caw:hatpos:uncomment)
+xmap gcI  <Plug>(caw:zeropos:comment)
+xmap gcuI <Plug>(caw:zeropos:uncomment)
+xmap gca  <Plug>(caw:dollarpos:comment)
+xmap gcua <Plug>(caw:dollarpos:uncomment)
+xmap gcw  <Plug>(caw:wrap:toggle)
+xmap gcb  <Plug>(caw:box:comment)
+nmap gco  <Plug>(caw:jump:comment-next)
+nmap gcO  <Plug>(caw:jump:comment-prev)
+'''
+# }}}
+# Replace Words {{{
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = 'vim-operator-user'
+hook_add = '''
+   xmap p <Plug>(operator-replace)
+'''
+# }}}
+#____________________________________________________________
+
 ### # -----------------------------------------------------------
 ### # 4. Writting -----------------------------------------------
 ### # -----------------------------------------------------------
@@ -771,9 +758,9 @@ endfunction
 ### [[plugins]]
 ### repo = 'kana/vim-textobj-user'
 ###
-### [[plugins]]
-### repo = 'kana/vim-operator-user'
-### # }}}
+[[plugins]]
+repo = 'kana/vim-operator-user'
+# }}}
 ### # Utility {{{
 ###
 ### # Helpを日本語化
