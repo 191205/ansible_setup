@@ -1,3 +1,4 @@
+ gitInit.sh
 *.pyc
 /python
 /roles/dotfiles/files/.hammerspoon/iterm.lua
