@@ -11,6 +11,22 @@ let g:dein#install_progress_type = 'echo'
 let g:dein#enable_notification = 0
 let g:dein#install_log_filename = $VARPATH.'/dein.log'
 
+" Search and use environments specifically made for Neovim.
+if isdirectory($VARPATH.'/venv/neovim2')
+	let g:python_host_prog = $VARPATH.'/venv/neovim2/bin/python'
+endif
+if isdirectory($VARPATH.'/venv/neovim3')
+	let g:python3_host_prog = $VARPATH.'/venv/neovim3/bin/python'
+endif
+
+if has('pythonx')
+	if has('python3')
+		set pyxversion=3
+	elseif has('python')
+		set pyxversion=2
+	endif
+endif
+
 function! s:dein_check_ruby() abort
 	call system("ruby -e 'require \"json\"; require \"yaml\"'")
 	return (v:shell_error == 0) ? 1 : 0
@@ -83,20 +99,20 @@ augroup MyAutoCmd
 	autocmd CursorHold *? syntax sync minlines=300
 augroup END
 
-" Initialize base requirements
+" Initialize base requirements -------------------------------------------------
 if has('vim_starting')
-	call s:source_file('init.vim')
+		"	call s:source_file('init.vim')
 	call s:source_file('vimrc.mapping.init')
 	if has('nvim')
 		" Neovim settings
-		call s:source_file('neovim.vim')
+		call s:source_file('vimrc.config.neovim')
 	elseif ! has('gui_running') && ! has('win32') && ! has('win64')
 		" Linux terminal settings
-		call s:source_file('terminal.vim')
+		call s:source_file('vimrc.config.terminal')
 	endif
 endif
 
-" Initialize dein.vim (package manager)
+" Initialize dein.vim (package manager) ----------------------------------------
 let s:path = expand('$VARPATH/dein')
 let s:plugins_path = expand('$VIMPATH/config/plugins.yaml')
 let s:user_plugins_path = expand('$VIMPATH/config/local.plugins.yaml')
