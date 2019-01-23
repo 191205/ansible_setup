@@ -31,7 +31,7 @@ build = 'make'
 [[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
 on_cmd = [ 'IndentGuidesEnable', 'IndentGuidesDisable', 'IndentGuidesToggle' ]
-hook_add = 'source $VIMPATH/vimrc.config.indent'
+hook_add = 'source $VIMPATH/config/plugins/vimrc.config.indent'
 # }}}
 # }}}
 # Foucs Mode {{{
@@ -40,7 +40,7 @@ hook_add = 'source $VIMPATH/vimrc.config.indent'
 [[plugins]]
 repo = 'junegunn/goyo.vim'
 depends = 'limelight.vim'
-hook_source = 'source $VIMPATH/vimrc.config.goyo'
+hook_source = 'source $VIMPATH/config/plugins/vimrc.config.goyo'
 on_cmd = 'Goyo'
 
 
@@ -115,7 +115,7 @@ repo = 'haya14busa/vim-edgemotion'
 # -----------------------------------------------------------
 # Git Manager {{{
 repo = 'lambdalisue/gina.vim'
-# hook_source = 'source $VIMPATH/vimrc.config.gina'
+# hook_source = 'source $VIMPATH/config/plugins/vimrc.config.gina'
 merged = 0
 hook_add = '''
 nnoremap <silent> <Leader>aa :<C-u>Gina status<CR>
@@ -134,7 +134,7 @@ nnoremap <silent> <Leader>ars :<C-u>Gina show <C-r><C-w><CR>
 nnoremap <silent> <Leader>arc :<C-u>Gina changes <C-r><C-w><CR>
 '''
 hook_post_source = '''
-execute 'source' fnameescape(expand('$VIMPATH/vimrc.config.gina'))
+execute 'source' fnameescape(expand('$VIMPATH/config/plugins/vimrc.config.gina'))
 '''
 # }}}
 # Comment Manager {{{
@@ -168,13 +168,13 @@ let g:vimwiki_hl_headers = 1
 let g:vimwiki_hl_cb_checked = 1
 let g:vimwiki_autowriteall = 0
 '''
-hook_source = 'source ~/$VIMPATH/vimrc.config.vimwiki'
+hook_source = 'source $VIMPATH/config/plugins/vimrc.config.vimwiki'
 
 # }}}
 # Buffer/Tab/Session Manager {{{
 [[plugins]]
 repo = 'vim-ctrlspace/vim-ctrlspace'
-hook_source = 'source $VIMPATH/vimrc.config.ctrlspace'
+hook_source = 'source $VIMPATH/config/plugins/vimrc.config.crtlspace'
 # }}}
 # Tag Manager {{{
 [[plugins]]
@@ -245,7 +245,7 @@ endfunction
 ### # [[plugins]]
 ### # repo = 'benekastah/neomake'
 ### # on_cmd = [ 'Neomake', 'NeomakeFile', 'NeomakeEnable' ]
-### # hook_source = 'source $VIMPATH/config/ex/settings/neomake.vim'
+### # hook_source = 'source $VIMPATH/config/plugins/vimrc.config.neomake'
 ### # hook_add: '''
 ### # let g:lint_types = [
 ### # \  'yaml.ansible', 'python', 'php', 'ruby', 'vim', 'go', 'sh',
@@ -270,7 +270,7 @@ endfunction
 ### repo = 'srstevenson/vim-picker'
 ### on_cmd = [ 'PickerEdit', 'PickerListUserCommands', 'PickerBuffer' ]
 ### on_map = '<Plug>'
-### hook_source = 'source $VIMPATH/vimrc.config.picker'
+### hook_source = 'source $VIMPATH/config/plugins/vimrc.config.picker'
 ### # }}}
 ### # }}}
 ### # Directory Configuration File  {{{
