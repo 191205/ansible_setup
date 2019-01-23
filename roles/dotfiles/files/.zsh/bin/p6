@@ -1,3 +1,0 @@
-#!/bin/sh
-open -a QuickTime\ Player 'http://live-icy.gss.dr.dk/A/A29H.mp3.m3u'
-

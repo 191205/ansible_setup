@@ -1,118 +1,137 @@
-#
-# Command aliases
-#
+# Tools
+#_______________________________________________________________
+# Tmux {{{
+# -------------------------------------------------------------------------
+alias ts="tmux list-windows -F "#{window_active}#{window_layout}" | grep "^1" | cut -d " " -f 2"
 
-alias ....='cd ../..'
-alias ,=ranger
-alias :e=vim
-alias :qa=exit
-alias :sp='test -n "$TMUX" && tmux split-window'
-alias :vs='test -n "$TMUX" && tmux split-window -h'
-alias :wq=exit
-alias a=ag
-alias b=bundle
-alias be='bundle exec'
-alias cd..='cd ..'
-alias cdtmp='cd $(mktemp -d $TMPDIR/$USER-cdtmp-XXXXXX)'
-alias clip='nc -U ~/.clipper.sock'
-alias d='hash -d'
-alias e=exit
-alias f='ssh -N -f sandbox-clipper'
-alias g=git
-alias gl=git log --oneline --decorate --all --graph
-alias groot='cd $(git rev-parse --show-toplevel 2> /dev/null || echo -n ".")'
-alias h=history
-alias j=jump
-alias k='__temp() { rm -f ~/.ssh/glh@* && ssh ${1:-sandbox} rm -f .clipper.sock; unfunction __temp}; __temp'
-alias l='ls -F'
-alias ll='ls -laF'
-alias m=mosh
-alias o='git oneline'
-alias p='git patch'
-alias prettyjson='python -m json.tool'
-alias oo='git oneline -10'
-alias s=ssh
-alias serve='python -m SimpleHTTPServer' # optional arg: port (defaults to 8000)
-alias t=tmux
-alias v=vim
+alias tl="lsof -U | grep '^tmux'"
+# }}}
+# Git  {{{
+# --------------------------------------------------------------
+alias g="git clone https://github.com/"
+alias gi="git init"
+alias gc="git commit -m"
+alias ga="git add -A"
+alias gs="git status"
+alias gd="git diff"
+alias gp="git push"
+alias g-name="git config --global user.name "Kwask94""
+alias g-email="git config --global user.email dev94@nym.hush.com"
+# }}}
+# NPM  {{{
+# --------------------------------------------------------------
+alias ni="npm install"
+alias nu="npm uninstall"
+alias nup="npm update"
+alias nri="rm -r node_modules && npm install"
+alias ncd="npm-check -su"
+# }}}
+# Fasd {{{
+# --------------------------------------------------------------
+alias a='fasd -a'        # any
+alias s='fasd -si'       # show / search / select
+alias d='fasd -d'        # directory
+alias f='fasd -f'        # file
+alias sd='fasd -sid'     # interactive directory selection
+alias sf='fasd -sif'     # interactive file selection
+alias z='fasd_cd -d'     # cd, same functionality as j in autojump
+alias zz='fasd_cd -d -i' # cd with interactive selection
+# }}}
 
-if command -v nvim &> /dev/null; then
-  alias vim=nvim # Use `\vim` or `command vim` to get the real vim.
-fi
+# Workflow
+# _______________________________________________________________
+# Templates {{{
+# --------------------------------------------------------------
+alias Txa="cp ~/Documents/LaTeX/article.tex"
+alias Txs="cp ~/Documents/LaTeX/beamer.tex"
+alias Txh="cp ~/Documents/LaTeX/handout.tex"
+alias TC='texclear'
+# }}}
+# Accses Key config files{{{
+# --------------------------------------------------------------
+alias cfz="nvim ~/.zshrc"
+alias cfa="nvim ~/.alias"
+alias cft="nvim ~/.tmux.conf"
+alias cfc="nvim ~/.chunkwmrc"
+alias cfs="nvim ~/.skhdrc"
+alias cfq="nvim ~/.qutebrowser/config.py"
+alias cfk="nvim ~/.config/karabiner/karabiner.json"
+alias cfr="nvim ~/.config/ranger/rc.conf"
 
-#
-# Suffix aliases
-# (eg. "foo.md" to open Markdown files in "Marked 2.app")
-#
-alias -s md='open -a "Marked 2.app"'
+# Refresh
+alias rcfz="source ~/.zshrc"
 
-#
-# Global aliases
-# (work at any position within the command line)
-#
+# }}}
 
-# Mnemonic: "[C]lip"
-alias -g C="|clip"
+# System
+#_______________________________________________________________
+# MAC  {{{
+# --------------------------------------------------------------
+alias hidedesk="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesk="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+alias rcfc="brew services restart chunkwm"
+alias rcfs="brew services restart skhd"
+# }}}
+# ARCH {{{
+# --------------------------------------------------------------
+alias mw="~/.config/mutt/mutt-wizard.sh"
+alias muttwizard="~/.config/mutt/mutt-wizard.sh"
+alias sdn="sudo shutdown now"
+alias psref="gpg-connect-agent RELOADAGENT /bye" # Refresh gpg
+# dircolors --print-database uses its own built-in database
+[ $BASH ] && [ -f /etc/bash_completion ] && source /etc/bash_completion
+[ $BASH ] && [ -f /usr/share/bash-completion/bash_completion ] && source /usr/share/bash-completion/bash_completion
 
-# Mnemonic: "[G]rep"
-alias -g G="|grep"
+alias ref="shortcuts && source ~/.bashrc" # Refresh shortcuts manually and reload bashrc
+alias bw="wal -i ~/.config/wall.png" # Rerun pywal
 
-# Mnemonic: "[H]ead"
-alias -g H="|head"
+# }}}
 
-# Pretty-print JSON.
-# Mnemonic: "[J]SON"
-alias -g J="|python -m json.tool"
+# Conventions
+#_______________________________________________________________
+# Shell {{{
+# --------------------------------------------------------------
+alias lsa='ls -la'
+alias mkd="mkdir -pv"
+alias cc='clear'
+alias q='exit'
 
-# Mnemonic: "[L]ess"
-alias -g L="|less"
+# alias -s sh=vim         # Shell Files
+alias -s md=nvim        # Markdown Files
+alias -s rmd=nvim       # R Markdown Files
+alias -s tex=nvim       # Tex Files
+alias -s text=nvim      # Text Files
+alias -s pdf=           # Pdf Files
+alias -s mp4=mpv        # Video Files
+alias -s mkv=mpv        # Video Files
+alias -s avi=mpv        # Video Files
+alias -s html=w3m       # Local Html
+# }}}
+# Application {{{
+# --------------------------------------------------------------
+alias mpv='open -na /Applications/mpv.app'
+alias r="ranger"        # File Browser
+alias v="nvim"          # File Editor
+alias b="brew"
+alias bi="brew install"
+alias yt="youtube-dl --add-metadata -ic"
+alias yta="youtube-dl --add-metadata -xic"
+alias YT="youtube-viewer"
+alias trem="transmission-remote"
+# alias y="mpsyt"         # Youtube
+# }}}
+# Nav Alias {{{
+# --------------------------------------------------------------
+alias c="cd ~"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -- -="cd -"
+alias ld='ls -d .[^.]*'
+alias lf='ls'
+alias ls='ls -la'
+# }}}
 
-# Mnemonic: "[R]eset"
-alias -g R=";clear;test -n "$TMUX" && tmux clear-history;"
+# vim:ft=sh:ts=2:sw=2:fdm=marker
 
-# Git
-alias g='git'
-alias gp='git push'
-alias ga='git add --all'
-alias gd='git diff'
-# alias gl='git log'
-alias gla='git log --all'
-alias gt='git tree'
-alias gta='git tree --all'
-alias gdt='git difftool'
-alias gmt='git mergetool'
-alias gs='git status -sb'
-alias gci='git commit -m'
-alias gcm='git checkout master'
-alias gdmb='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
-# Hub
-alias gb='hub browse'
-alias gpr='hub pull-request'
-
-# Ruby
-alias be='bundle exec'
-alias ra='rails'
-
-# JS
-alias yr="yarn run"
-alias npr="npm run"
-
-# Personal
-alias se="ytview"
-alias send="transfer"
-
-if [ is_mac ]; then
-  alias ql='qlmanage -p 2>/dev/null' # OS X Quick Look
-  alias batt="pmset -g batt | sed '1d' | sed -e 's/-InternalBattery-0//' | awk '{\$1=\$1}1'"
-  alias random="macchanger -r en0 && random-hostname"
-  alias osxupdate="sudo softwareupdate -a -i && brew update && brew upgrade"
-  alias update-host="curl "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" | sudo tee -a /etc/hosts"
-  alias vimupdate="cd .vim && make"
-  alias ports="sudo lsof -i -P | grep -i "listen""
-  alias scan='sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s'
-  alias tap='sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --getinfo'
-  alias sniff='sudo /usr/libexec/airportd en0 sniff'
-  alias setchannelto1='sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --channel=2'
-  alias setchannelto2='sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --channel=2'
-  alias setchannelto3='sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --channel=3'
-fi

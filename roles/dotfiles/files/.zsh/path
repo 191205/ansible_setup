@@ -10,8 +10,5 @@ PATH=$PATH:/usr/local/opt/srm/bin
 PATH=$PATH:$SYSTEM_PATH
 PATH=$PATH:$EC2_HOME/bin
 PATH=$PATH:$HOME/.local/bin
-PATH=$PATH:$HOME/.composer/vendor/bin
 PATH=$PATH:$HOME/.cabal/bin
-PATH=$PATH:$HOME/.rvm/bin
-PATH=/usr/local/opt/apr/bin:$PATH
 export PATH

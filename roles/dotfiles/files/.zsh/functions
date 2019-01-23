@@ -11,38 +11,20 @@ function ag() {
 # From: https://github.com/junegunn/fzf/wiki/examples#changing-directory
 function fd() {
   local DIR
-  DIR=$(bfs ${1:-.} -type d -nohidden 2> /dev/null | fzf +m) && cd "$DIR"
-}
-
-# fda -"find directory [all, including hidden directories"
-function fda() {
-  local DIR
   DIR=$(bfs ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$DIR"
 }
 
 # fh - "find [in] history"
 # From: https://github.com/junegunn/fzf/wiki/examples#command-history
 function fh() {
-  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
+  print -z $(fc -l 1 | fzf +s --tac | sed 's/ *[0-9]* *//')
 }
 
 function history() {
   emulate -L zsh
 
   # This is a function because Zsh aliases can't take arguments.
-  local DEFAULT=-1000
-  builtin history ${1:-$DEFAULT}
-}
-
-function mosh() {
-  emulate -L zsh
-
-  if [[ -z "$@" ]]; then
-    # common case: getting to my workstation
-    command mosh -6 sandbox
-  else
-    command mosh "$@"
-  fi
+  fc -l 1
 }
 
 function mvim() {
@@ -70,7 +52,7 @@ function ssh() {
 
   if [[ -z "$@" ]]; then
     # common case: getting to my workstation
-    command ssh sandbox-clipper
+    command ssh dev
   else
     local LOCAL_TERM=$(echo -n "$TERM" | sed -e s/tmux/screen/)
     env TERM=$LOCAL_TERM command ssh "$@"
@@ -114,7 +96,7 @@ function tmux() {
   fi
 
   # Attach to existing session, or create one, based on current directory.
-  SESSION_NAME=$(basename "$(pwd)")
+  local SESSION_NAME=$(basename "${$(pwd)//[.:]/_}")
   env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux new -A -s "$SESSION_NAME"
 }
 
@@ -132,8 +114,9 @@ function bounce() {
 #   replaces .tif with .tiff for all files in current dir
 #   must quote the regex otherwise "\." becomes "."
 # limitations: ? doesn't seem to work in the regex, nor *
-regmv()
-{
+regmv() {
+  emulate -L zsh
+
   if [ $# -lt 2 ]; then
     echo "  Usage: regmv 'regex' file(s)"
     echo "  Where:       'regex' should be of the format '/find/replace/'"
@@ -141,11 +124,11 @@ regmv()
     echo "   Note: Must quote/escape the regex otherwise \"\.\" becomes \".\""
     return 1
   fi
-  regex="$1"
+  local regex="$1"
   shift
   while [ -n "$1" ]
   do
-    newname=$(echo "$1" | sed "s${regex}g")
+    local newname=$(echo "$1" | sed "s${regex}g")
     if [ "${newname}" != "$1" ]; then
       mv -i -v "$1" "$newname"
     fi
@@ -154,6 +137,8 @@ regmv()
 }
 
 function email() {
+  emulate -L zsh
+
   if ! tmux has-session -t email 2> /dev/null; then
     # Make saved attachments go to ~/Downloads by default.
     tmux new-session -d -s email -c ~/Downloads -n mutt
@@ -192,6 +177,7 @@ function jump() {
 
 function _jump_complete() {
   emulate -L zsh
+
   local word completions
   word="$1"
   completions="$(hash -d|cut -d= -f1)"
@@ -201,33 +187,31 @@ function _jump_complete() {
 # Complete filenames and `hash -d` entries.
 compctl -f -K _jump_complete jump
 
-# WriteRoom-style focused workspace.
-function wr() {
+# "[t]ime[w]arp" by setting GIT_AUTHOR_DATE and GIT_COMMITTER_DATE.
+function tw() {
   emulate -L zsh
 
-  local THRESHOLD=200
-  local COLS=$(tput cols)
-  if ! tmux has-session -t WriteRoom 2> /dev/null; then
-    tmux new-session -d -s WriteRoom -c ~/Documents/Corpus -x $(tput cols) -y $(tput lines)
-    # TODO: something less clowny here (want width of created session, not width
-    # of current pane).
-    if [ "$COLS" -gt "$THRESHOLD" ]; then
-      tmux split-window -t WriteRoom -h -p 25
-      tmux split-window -t WriteRoom.1 -b -h -p 25
-      tmux select-pane -t WriteRoom.2
-      tmux send-keys -t WriteRoom.2 "vim -c CommandT" Enter
-    else
-      tmux send-keys -t WriteRoom "vim -c CommandT" Enter
-    fi
-  fi
-  if [ -z "$TMUX" ]; then
-    tmux attach -t WriteRoom
+  local TS=$(ts "$@")
+  echo "Spawning subshell with timestamp: $TS"
+  env GIT_AUTHOR_DATE="$TS" GIT_COMMITTER_DATE="$TS" zsh
+}
+
+# "tick" by incrementing GIT_AUTHOR_DATE and GIT_COMMITTER_DATE.
+function tick() {
+  emulate -L zsh
+
+  if [ -z "$GIT_AUTHOR_DATE" -o -z "$GIT_COMMITTER_DATE" ]; then
+    echo 'Expected $GIT_AUTHOR_DATE and $GIT_COMMITTER_DATE to be set.'
+    echo 'Did you forget to timewarp with `tw`?'
   else
-    tmux switch-client -t WriteRoom
+    # Fragile assumption: dates are in format produced by `tw`/`ts`.
+    local TS=$(expr \
+      $(echo $GIT_AUTHOR_DATE | cut -d ' ' -f 1) \
+      $(parseoffset "$@") \
+    )
+    local TZ=$(date +%z)
+    echo "Bumping timestamp to: $TS $TZ"
+    export GIT_AUTHOR_DATE="$TS $TZ"
+    export GIT_COMMITTER_DATE="$TS $TZ"
   fi
 }
-
-mkcd() {
-  mkdir -p "$@" && cd "$@"
-}
-

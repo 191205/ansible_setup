@@ -1,0 +1,201 @@
+
+
+# Defines Docker aliases.
+
+# Author:
+#   François Vantomme <akarzim@gmail.com>
+
+
+# Docker {{{
+# alias d='docker'
+# alias da='docker attach'
+# alias db='docker build'
+# alias dd='docker diff'
+# alias ddf='docker system df'
+# alias de='docker exec'
+# alias dE='docker exec -e COLUMNS=`tput cols` -e LINES=`tput lines` -it'
+# alias dh='docker history'
+# # alias di='docker images'
+# # alias din='docker inspect'
+# # alias dim='docker import'
+# alias dk='docker kill'
+# alias dkh='docker kill -s HUP'
+# alias dl='docker logs'
+# alias dL='docker logs -f'
+# alias dli='docker login'
+# alias dlo='docker logout'
+# alias dls='docker ps'
+# alias dp='docker pause'
+# alias dP='docker unpause'
+# alias dpl='docker pull'
+# alias dph='docker push'
+# alias dps='docker ps'
+# alias dpsa='docker ps -a'
+# alias dr='docker run'
+# alias dR='docker run -e COLUMNS=`tput cols` -e LINES=`tput lines` -it --rm'
+# alias dRe='docker run -e COLUMNS=`tput cols` -e LINES=`tput lines` -it --rm --entrypoint /bin/bash'
+# alias dRM='docker system prune'
+# alias drm='docker rm'
+# alias drmi='docker rmi'
+# alias drn='docker rename'
+# alias ds='docker start'
+# alias dS='docker restart'
+# alias dss='docker stats'
+# alias dsv='docker save'
+# alias dt='docker tag'
+# alias dtop='docker top'
+# alias dup='docker update'
+# alias dV='docker volume'
+# alias dv='docker version'
+# alias dw='docker wait'
+# alias dx='docker stop'
+## }}}
+
+## Container (C) {{{
+alias dc='docker container'
+alias dcls='docker container ls'
+alias dcr='docker container run'
+alias dcs='docker container start'
+alias dcp='docker container pause'
+alias dcP='docker container unpause'
+alias dca='docker container attach'
+alias dcrn='docker container rename'
+alias dcx='docker container stop'
+alias dcS='docker container restart'
+alias dck='docker container kill'
+alias dcrm='docker container rm'
+# MORE {{{
+alias dcss='docker container stats'
+alias dctop='docker container top'
+alias dccp='docker container cp'
+alias dcd='docker container diff'
+alias dce='docker container exec'
+alias dcE='docker container exec -e COLUMNS=`tput cols` -e LINES=`tput lines` -it'
+alias dcin='docker container inspect'
+alias dcl='docker container logs'
+alias dcL='docker container logs -f'
+alias dcpr='docker container prune'
+alias dcR='docker container run -e COLUMNS=`tput cols` -e LINES=`tput lines` -it --rm'
+alias dcRe='docker container run -e COLUMNS=`tput cols` -e LINES=`tput lines` -it --rm --entrypoint /bin/bash'
+alias dcup='docker container update'
+alias dcw='docker container wait'
+## }}}
+##}}}
+
+## Image (I) {{{
+alias di='docker image'
+alias dib='docker image build'
+alias dih='docker image history'
+alias dim='docker image import'
+alias din='docker image inspect'
+alias dils='docker image ls'
+alias dipr='docker image prune'
+alias dipl='docker image pull'
+alias diph='docker image push'
+alias dirm='docker image rm'
+alias disv='docker image save'
+alias dit='docker image tag'
+## }}}
+
+## Volume (V) {{{
+alias dv='docker volume'
+alias dvin='docker volume inspect'
+alias dvls='docker volume ls'
+alias dvpr='docker volume prune'
+alias dvrm='docker volume rm'
+## }}}
+
+## Network (N) {{{
+alias dn='docker network'
+alias dns='docker network connect'
+alias dnx='docker network disconnect'
+alias dnin='docker network inspect'
+alias dnls='docker network ls'
+alias dnpr='docker network prune'
+alias dnrm='docker network rm'
+
+## }}}
+
+## System (Y) {{{
+alias dy='docker system'
+alias dydf='docker system df'
+alias dypr='docker system prune'
+## }}}
+
+## Stack (K) {{{
+alias dk='docker stack'
+alias dkls='docker stack ls'
+alias dkps='docker stack ps'
+alias dkrm='docker stack rm'
+
+## }}}
+
+## Swarm (W) {{{
+alias dw='docker swarm'
+
+## }}}
+
+## CleanUp (rm) {{{
+# Clean up exited containers (docker < 1.13)
+alias drmC='docker rm $(docker ps -qaf status=exited)'
+
+# Clean up dangling images (docker < 1.13)
+alias drmI='docker rmi $(docker images -qf dangling=true)'
+
+# Pull all tagged images
+alias dplI='docker images --format "{{ .Repository }}" | grep -v "^<none>$" | xargs -L1 docker pull'
+
+# Clean up dangling volumes (docker < 1.13)
+alias drmV='docker volume rm $(docker volume ls -qf dangling=true)'
+### }}}
+
+# Docker Machine (m) {{{
+alias dm='docker-machine'
+alias dma='docker-machine active'
+alias dmcp='docker-machine scp'
+alias dmin='docker-machine inspect'
+alias dmip='docker-machine ip'
+alias dmk='docker-machine kill'
+alias dmls='docker-machine ls'
+alias dmpr='docker-machine provision'
+alias dmps='docker-machine ps'
+alias dmrg='docker-machine regenerate-certs'
+alias dmrm='docker-machine rm'
+alias dms='docker-machine start'
+alias dmsh='docker-machine ssh'
+alias dmst='docker-machine status'
+alias dmS='docker-machine restart'
+alias dmu='docker-machine url'
+alias dmup='docker-machine upgrade'
+alias dmv='docker-machine version'
+alias dmx='docker-machine stop'
+# }}}
+
+# Docker Compose (c) {{{
+# alias dc='docker-compose'
+# alias dcb='docker-compose build'
+# alias dcB='docker-compose build --no-cache'
+# alias dcd='docker-compose down'
+# alias dce='docker-compose exec -e COLUMNS=`tput cols` -e LINES=`tput lines`'
+# alias dck='docker-compose kill'
+# alias dcl='docker-compose logs'
+# alias dcL='docker-compose logs -f'
+# alias dcls='docker-compose ps'
+# alias dcp='docker-compose pause'
+# alias dcP='docker-compose unpause'
+# alias dcpl='docker-compose pull'
+# alias dcph='docker-compose push'
+# alias dcps='docker-compose ps'
+# alias dcr='docker-compose run -e COLUMNS=`tput cols` -e LINES=`tput lines`'
+# alias dcR='docker-compose run -e COLUMNS=`tput cols` -e LINES=`tput lines` --rm'
+# alias dcrm='docker-compose rm'
+# alias dcs='docker-compose start'
+# alias dcsc='docker-compose scale'
+# alias dcS='docker-compose restart'
+# alias dcu='docker-compose up'
+# alias dcU='docker-compose up -d'
+# alias dcv='docker-compose version'
+# alias dcx='docker-compose stop'
+# }}}
+
+# vim:ft=sh:ts=2:sw=2:fdm=marker

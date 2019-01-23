@@ -1,2 +1,0 @@
-#!/bin/sh
-open -a vox 'http://live-icy.gss.dr.dk/A/A22H.mp3.m3u'
