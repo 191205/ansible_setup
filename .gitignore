@@ -9,6 +9,8 @@
 /roles/dotfiles/files/.mutt/scripts/vendor
 /roles/dotfiles/files/.npmrc
 /roles/dotfiles/files/.pypirc
+/roles/dotfiles/files/.vim/.theme
+/roles/dotfiles/files/.vim/.cs_files
 /roles/dotfiles/files/.vim/.base16
 /roles/dotfiles/files/.vim/.base16.previous
 /roles/dotfiles/files/.vim/after/plugin/command-t.private.vim
